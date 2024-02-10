@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Select from 'react-select';
-import CountryList from 'react-select-country-list';
 
 const Form = () => {
   const [step, setStep] = useState(1);
@@ -17,28 +15,73 @@ const Form = () => {
     edadMascota: '',
     dimensionesMascota: '',
   });
-  const [apiResponse, setApiResponse] = useState(null);
-  const [areaCodes, setAreaCodes] = useState([]);
+  const [areaCodes, setAreaCodes] = useState([
+    { label: 'USA (+1)', value: '1' },
+    { label: 'UK (+44)', value: '44' },
+  ]);
   const [countries, setCountries] = useState([]);
+  const [airlines, setAirlines] = useState([]);
+
+  const handleAreaCodeChange = (selectedOption) => {
+    setFormData({ ...formData, numeroTelefono: `+${selectedOption.value}` });
+  };
 
   useEffect(() => {
-    //códigos de área. debo revisar si hay libreria para esto
-    const mockAreaCodes = [
-      { label: 'USA (+1)', value: '1' },
-      { label: 'UK (+44)', value: '44' },
+    // Obtener países de la API
+    if (step === 2) {
+      fetchCountries();
+      fetchAirlines();
+    }
+  }, [step]);
 
-    ];
-    setAreaCodes(mockAreaCodes);
+  const fetchCountries = async () => {
+    try {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
 
-   //lista de paises
-    setCountries(CountryList().getData());
-  }, []);
+      const response = await fetch("https://petfly-api.onrender.com/countries", requestOptions);
+      if (response.ok) {
+        const data = await response.json();
+        setCountries(data.map(country => ({
+          label: country.name,
+          value: country.code
+        })));
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+    }
+  };
+
+  const fetchAirlines = async () => {
+    try {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+      const response = await fetch("https://petfly-api.onrender.com/airlines", requestOptions);
+      if (response.ok) {
+        const data = await response.json();
+        setAirlines(data.map(airline => ({
+          label: airline.name,
+          value: airline.id
+        })));
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    } catch (error) {
+      console.error('Error fetching airlines:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === 'numeroTelefono') {
-      // aqui guardamos sin el + para manychat
       const formattedPhoneNumber = value.replace(/\+/g, '');
       setFormData({ ...formData, [name]: formattedPhoneNumber });
     } else {
@@ -47,46 +90,14 @@ const Form = () => {
   };
 
   const handleEmailValidation = (email) => {
-    // validar que el correo tenga un @
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleSubmit = async () => {
-    if (!handleEmailValidation(formData.correoElectronico)) {
-      alert('Por favor, ingrese un correo electrónico válido.');
-      return;
-    }
-
-    try {
-      //Enviamos datos del form a la base de datos
-      const response = await axios.post('url', formData);
-
-      //capturar error
-      setApiResponse(response.data);
-      console.log('Respuesta de la API:', response.data);
-    } catch (error) {
-      console.error('Error al enviar los datos:', error);
-    }
-  };
-
-  const handleNextStep = async () => {
+  const handleNextStep = () => {
     if (step === 1) {
-      // solo se pasará al paso 2 después de enviar los datos básicos
       if (!formData.nombreCompleto || !formData.numeroTelefono || !handleEmailValidation(formData.correoElectronico)) {
         alert('Por favor, complete todos los campos correctamente.');
-        return;
-      }
-    }
-
-    if (step === 1) {
-      // el primer paso será enviar los datos a la bd para crear el susbscriber en manychat
-      try {
-        const response = await axios.post('url', formData);
-        
-        console.log('Respuesta de la API (Paso 1):', response.data);
-      } catch (error) {
-        console.error('Error al enviar los datos (Paso 1):', error);
         return;
       }
     }
@@ -98,8 +109,8 @@ const Form = () => {
     setFormData({ ...formData, paisDestino: selectedOption.value });
   };
 
-  const handleAreaCodeChange = (selectedOption) => {
-    setFormData({ ...formData, numeroTelefono: `+${selectedOption.value}` });
+  const handleAirlineChange = (selectedOption) => {
+    setFormData({ ...formData, aerolineaTransporte: selectedOption.value });
   };
 
   return (
@@ -164,9 +175,9 @@ const Form = () => {
               </label>
             </div>
             <div className="mb-3">
-              <label>
+              <label htmlFor="aerolineaTransporte" className="form-label">
                 Aerolínea o Empresa de Transporte:
-                <input type="text" name="aerolineaTransporte" value={formData.aerolineaTransporte} onChange={handleChange} />
+                <Select options={airlines} onChange={handleAirlineChange} />
               </label>
             </div>
             <div className="mb-3">
@@ -204,17 +215,7 @@ const Form = () => {
                 />
               </label>
             </div>
-            <button type="button" className="btn btn-success" onClick={handleSubmit}>
-              Enviar
-            </button>
           </>
-        )}
-
-        {apiResponse && (
-          <div className="alert alert-success" role="alert">
-            <h2>COTIZACIÓN</h2>
-            <p>{apiResponse}</p>
-          </div>
         )}
       </form>
     </div>
