@@ -228,6 +228,7 @@ const Form = () => {
                 Peso de la Mascota:
                 <input
                   type="number"
+                  className="form-control"
                   name="pesoMascota"
                   value={formData.pesoMascota}
                   onChange={handleChange}
@@ -259,6 +260,7 @@ const Form = () => {
                 Dimensiones de la Mascota (OPCIONAL):
                 <input
                   type="text"
+                  className="form-control"
                   name="dimensionesMascota"
                   value={formData.dimensionesMascota.split(',')[0]}
                   onChange={(e) => handleDimensionChange(0, e.target.value)}
@@ -267,6 +269,7 @@ const Form = () => {
                 />
                 <input
                   type="text"
+                  className="form-control"
                   name="dimensionesMascota"
                   value={formData.dimensionesMascota.split(',')[1]}
                   onChange={(e) => handleDimensionChange(1, e.target.value)}
@@ -275,6 +278,7 @@ const Form = () => {
                 />
                 <input
                   type="text"
+                  className="form-control"
                   name="dimensionesMascota"
                   value={formData.dimensionesMascota.split(',')[2]}
                   onChange={(e) => handleDimensionChange(2, e.target.value)}
@@ -294,3 +298,4 @@ const Form = () => {
 };
 
 export default Form;
+
