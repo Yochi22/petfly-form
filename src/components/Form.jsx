@@ -227,7 +227,7 @@ const Form = () => {
                 />
               </label>
             </div>
-            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+            <button type="button" className="btn btn-primary" onClick={handleNextStep}>
               Siguiente
             </button>
           </>
