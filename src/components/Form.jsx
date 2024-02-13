@@ -5,10 +5,12 @@ import 'react-phone-number-input/style.css';
 
 const Form = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const [formDataStep1, setFormDataStep1] = useState({
     nombreCompleto: '',
     numeroTelefono: '',
     correoElectronico: '',
+  });
+  const [formDataStep2, setFormDataStep2] = useState({
     paisDestino: '',
     tipoMascota: '',
     pesoMascota: '',
@@ -71,9 +73,14 @@ const Form = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChangeStep1 = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormDataStep1({ ...formDataStep1, [name]: value });
+  };
+
+  const handleChangeStep2 = (e) => {
+    const { name, value } = e.target;
+    setFormDataStep2({ ...formDataStep2, [name]: value });
   };
 
   const handleEmailValidation = (email) => {
@@ -83,51 +90,99 @@ const Form = () => {
 
   const handleNextStep = () => {
     if (step === 1) {
-      if (!formData.nombreCompleto || !formData.numeroTelefono || !handleEmailValidation(formData.correoElectronico)) {
+      if (!formDataStep1.nombreCompleto || !formDataStep1.numeroTelefono || !handleEmailValidation(formDataStep1.correoElectronico)) {
         alert('Por favor, complete todos los campos correctamente.');
         return;
       }
-      const formattedPhoneNumber = formData.numeroTelefono.replace(/\s|\+/g, '');
-      setFormData({ ...formData, numeroTelefono: formattedPhoneNumber });
+      const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(/\s|\+/g, '');
+      setFormDataStep1({ ...formDataStep1, numeroTelefono: formattedPhoneNumber });
     }
 
     setStep(step + 1);
   };
 
   const handleCountryChange = (selectedOption) => {
-    setFormData({ ...formData, paisDestino: selectedOption.value });
+    setFormDataStep2({ ...formDataStep2, paisDestino: selectedOption.value });
   };
 
   const handleAirlineChange = (selectedOption) => {
-    setFormData({ ...formData, aerolineaTransporte: selectedOption.value });
+    setFormDataStep2({ ...formDataStep2, aerolineaTransporte: selectedOption.value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmitStep1 = async () => {
+    // Validamos que los campos son requeridos
+    if (!formDataStep1.nombreCompleto || !formDataStep1.numeroTelefono || !formDataStep1.correoElectronico) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+  
+    // Validamos que el correo tenga un formato correcto
+    if (!handleEmailValidation(formDataStep1.correoElectronico)) {
+      alert('Por favor, ingrese un correo electrónico válido.');
+      return;
+    }
+  
+    // Formateamos el número porque manychat solo acepta numeros sin el signo + ni espacios
+    const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(/\s|\+/g, '');
+    setFormDataStep1({ ...formDataStep1, numeroTelefono: formattedPhoneNumber });
+  
+    // Enviar datos del primer paso
     try {
-      const response = await fetch('URL_DE_TU_API', {
+      const response = await fetch('endpoint api', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataStep1),
+      });
+  
+      if (response.ok) {
+        alert('Datos del primer paso del formulario enviados exitosamente');
+        setStep(2); // Cambiar al siguiente paso
+      } else {
+        alert('Por favor, inténtalo de nuevo.');
+      }
+    } catch (error) {
+      console.error('Error al enviar datos del primer paso del formulario:', error);
+      alert('Hubo un problema al enviar los datos del primer paso del formulario. Por favor, inténtalo de nuevo.');
+    }
+  };
+  
+  const handleSubmitStep2 = async () => {
+    try {
+      const response = await fetch('endpoint api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataStep2),
       });
 
       if (response.ok) {
-        alert('Formulario enviado exitosamente');
-        // Hay que analizar como obtener la respuesta, tal vez redirigiendo a otra página. no sé
+        alert('Datos del segundo paso del formulario enviados exitosamente');
       } else {
-        alert('Hubo un problema al enviar el formulario. Por favor, inténtalo de nuevo.');
+        alert('Hubo un problema al enviar los datos del segundo paso del formulario. Por favor, inténtalo de nuevo.');
       }
     } catch (error) {
-      console.error('Error al enviar formulario:', error);
-      alert('Hubo un problema al enviar el formulario. Por favor, inténtalo de nuevo.');
+      console.error('Error al enviar datos del segundo paso del formulario:', error);
+      alert('Hubo un problema al enviar los datos del segundo paso del formulario. Por favor, inténtalo de nuevo.');
     }
   };
 
   const handleDimensionChange = (index, value) => {
-    const dimensions = [...formData.dimensionesMascota.split(',')];
+    const dimensions = [...formDataStep2.dimensionesMascota.split(',')];
     dimensions[index] = value;
-    setFormData({ ...formData, dimensionesMascota: dimensions.join(',') });
+    setFormDataStep2({ ...formDataStep2, dimensionesMascota: dimensions.join(',') });
+  };
+
+  const handleSubmit = () => {
+    if (step === 1) {
+      handleSubmitStep1();
+    } else if (step === 2) {
+      handleSubmitStep2();
+
+      console.log(JSON.stringify(formDataStep1))
+    }
   };
 
   return (
@@ -143,8 +198,8 @@ const Form = () => {
                   className="form-control"
                   id="nombreCompleto"
                   name="nombreCompleto"
-                  value={formData.nombreCompleto}
-                  onChange={handleChange}
+                  value={formDataStep1.nombreCompleto}
+                  onChange={handleChangeStep1}
                 />
               </label>
             </div>
@@ -154,8 +209,8 @@ const Form = () => {
                 <PhoneInput
                   international
                   defaultCountry="CO"
-                  value={formData.numeroTelefono}
-                  onChange={(value) => setFormData({ ...formData, numeroTelefono: value })}
+                  value={formDataStep1.numeroTelefono}
+                  onChange={(value) => setFormDataStep1({ ...formDataStep1, numeroTelefono: value })}
                 />
               </label>
             </div>
@@ -167,12 +222,12 @@ const Form = () => {
                   className="form-control"
                   id="correoElectronico"
                   name="correoElectronico"
-                  value={formData.correoElectronico}
-                  onChange={handleChange}
+                  value={formDataStep1.correoElectronico}
+                  onChange={handleChangeStep1}
                 />
               </label>
             </div>
-            <button type="button" className="btn btn-primary" onClick={handleNextStep}>
+            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
               Siguiente
             </button>
           </>
@@ -200,8 +255,8 @@ const Form = () => {
                     { value: 'Perro', label: 'Perro' },
                     { value: 'Gato', label: 'Gato' }
                   ]}
-                  onChange={(selectedOption) => setFormData({ ...formData, tipoMascota: selectedOption.value })}
-                  value={{ value: formData.tipoMascota, label: formData.tipoMascota }}
+                  onChange={(selectedOption) => setFormDataStep2({ ...formDataStep2, tipoMascota: selectedOption.value })}
+                  value={{ value: formDataStep2.tipoMascota, label: formDataStep2.tipoMascota }}
                   isSearchable={false}
                   required
                 />
@@ -216,8 +271,8 @@ const Form = () => {
                     { value: 'Peligrosos', label: 'Peligrosos' },
                     { value: 'General', label: 'General' }
                   ]}
-                  onChange={(selectedOption) => setFormData({ ...formData, razaMascota: selectedOption.value })}
-                  value={{ value: formData.razaMascota, label: formData.razaMascota }}
+                  onChange={(selectedOption) => setFormDataStep2({ ...formDataStep2, razaMascota: selectedOption.value })}
+                  value={{ value: formDataStep2.razaMascota, label: formDataStep2.razaMascota }}
                   isSearchable={false}
                   required
                 />
@@ -230,8 +285,8 @@ const Form = () => {
                   type="number"
                   className="form-control"
                   name="pesoMascota"
-                  value={formData.pesoMascota}
-                  onChange={handleChange}
+                  value={formDataStep2.pesoMascota}
+                  onChange={handleChangeStep2}
                   required
                 />
               </label>
@@ -248,8 +303,8 @@ const Form = () => {
                     { value: '20', label: 'Más de 20 semanas' },
                     { value: '24', label: 'Más de 24 semanas' }
                   ]}
-                  onChange={(selectedOption) => setFormData({ ...formData, edadMascota: selectedOption.value })}
-                  value={{ value: formData.edadMascota, label: `Más de ${formData.edadMascota} semanas` }}
+                  onChange={(selectedOption) => setFormDataStep2({ ...formDataStep2, edadMascota: selectedOption.value })}
+                  value={{ value: formDataStep2.edadMascota, label: `Más de ${formDataStep2.edadMascota} semanas` }}
                   isSearchable={false}
                   required
                 />
@@ -262,7 +317,7 @@ const Form = () => {
                   type="text"
                   className="form-control"
                   name="dimensionesMascota"
-                  value={formData.dimensionesMascota.split(',')[0]}
+                  value={formDataStep2.dimensionesMascota.split(',')[0]}
                   onChange={(e) => handleDimensionChange(0, e.target.value)}
                   placeholder="Largo (cm)"
                 
@@ -271,7 +326,7 @@ const Form = () => {
                   type="text"
                   className="form-control"
                   name="dimensionesMascota"
-                  value={formData.dimensionesMascota.split(',')[1]}
+                  value={formDataStep2.dimensionesMascota.split(',')[1]}
                   onChange={(e) => handleDimensionChange(1, e.target.value)}
                   placeholder="Ancho (cm)"
                   
@@ -280,7 +335,7 @@ const Form = () => {
                   type="text"
                   className="form-control"
                   name="dimensionesMascota"
-                  value={formData.dimensionesMascota.split(',')[2]}
+                  value={formDataStep2.dimensionesMascota.split(',')[2]}
                   onChange={(e) => handleDimensionChange(2, e.target.value)}
                   placeholder="Alto (cm)"
                 
@@ -298,4 +353,3 @@ const Form = () => {
 };
 
 export default Form;
-
