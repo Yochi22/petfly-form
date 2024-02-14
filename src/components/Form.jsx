@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
-import PhoneInput from 'react-phone-number-input';
-import { Tooltip } from 'react-tooltip';
-import 'react-phone-number-input/style.css';
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
+import PhoneInput from "react-phone-number-input";
+import { Tooltip } from "react-tooltip";
+import "react-phone-number-input/style.css";
 
 const Form = () => {
   const [step, setStep] = useState(1);
   const [formDataStep1, setFormDataStep1] = useState({
-    nombreCompleto: '',
-    numeroTelefono: '',
-    correoElectronico: '',
+    nombreCompleto: "",
+    numeroTelefono: "",
+    correoElectronico: "",
   });
   const [formDataStep2, setFormDataStep2] = useState({
-    paisDestino: '',
-    tipoMascota: '',
-    pesoMascota: '',
-    razaMascota: '',
-    edadMascota: '',
-    dimensionesMascota: '',
+    paisDestino: "",
+    tipoMascota: "",
+    pesoMascota: "",
+    razaMascota: "",
+    edadMascota: "",
+    dimensionesMascota: "",
   });
   const [countriesList, setCountriesList] = useState([]);
   const [airlines, setAirlines] = useState([]);
@@ -33,44 +33,54 @@ const Form = () => {
   const fetchCountries = async () => {
     try {
       const requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
+        method: "GET",
+        redirect: "follow",
       };
 
-      const response = await fetch("https://petfly-api.onrender.com/countries", requestOptions);
+      const response = await fetch(
+        "https://petfly-api.onrender.com/countries",
+        requestOptions
+      );
       if (response.ok) {
         const data = await response.json();
-        setCountriesList(data.map(country => ({
-          label: country.name,
-          value: country.code
-        })));
+        setCountriesList(
+          data.map((country) => ({
+            label: country.name,
+            value: country.code,
+          }))
+        );
       } else {
-        throw new Error('Network response was not ok.');
+        throw new Error("Network response was not ok.");
       }
     } catch (error) {
-      console.error('Error fetching countries:', error);
+      console.error("Error fetching countries:", error);
     }
   };
 
   const fetchAirlines = async () => {
     try {
       const requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
+        method: "GET",
+        redirect: "follow",
       };
 
-      const response = await fetch("https://petfly-api.onrender.com/airlines", requestOptions);
+      const response = await fetch(
+        "https://petfly-api.onrender.com/airlines",
+        requestOptions
+      );
       if (response.ok) {
         const data = await response.json();
-        setAirlines(data.map(airline => ({
-          label: airline.name,
-          value: airline.id
-        })));
+        setAirlines(
+          data.map((airline) => ({
+            label: airline.name,
+            value: airline.id,
+          }))
+        );
       } else {
-        throw new Error('Network response was not ok.');
+        throw new Error("Network response was not ok.");
       }
     } catch (error) {
-      console.error('Error fetching airlines:', error);
+      console.error("Error fetching airlines:", error);
     }
   };
 
@@ -91,12 +101,22 @@ const Form = () => {
 
   const handleNextStep = () => {
     if (step === 1) {
-      if (!formDataStep1.nombreCompleto || !formDataStep1.numeroTelefono || !handleEmailValidation(formDataStep1.correoElectronico)) {
-        alert('Por favor, complete todos los campos correctamente.');
+      if (
+        !formDataStep1.nombreCompleto ||
+        !formDataStep1.numeroTelefono ||
+        !handleEmailValidation(formDataStep1.correoElectronico)
+      ) {
+        alert("Por favor, complete todos los campos correctamente.");
         return;
       }
-      const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(/\s|\+/g, '');
-      setFormDataStep1({ ...formDataStep1, numeroTelefono: formattedPhoneNumber });
+      const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(
+        /\s|\+/g,
+        ""
+      );
+      setFormDataStep1({
+        ...formDataStep1,
+        numeroTelefono: formattedPhoneNumber,
+      });
     }
 
     setStep(step + 1);
@@ -107,73 +127,101 @@ const Form = () => {
   };
 
   const handleAirlineChange = (selectedOption) => {
-    setFormDataStep2({ ...formDataStep2, aerolineaTransporte: selectedOption.value });
+    setFormDataStep2({
+      ...formDataStep2,
+      aerolineaTransporte: selectedOption.value,
+    });
   };
 
   const handleSubmitStep1 = async () => {
     // Validamos que los campos son requeridos
-    if (!formDataStep1.nombreCompleto || !formDataStep1.numeroTelefono || !formDataStep1.correoElectronico) {
-      alert('Por favor, complete todos los campos.');
+    if (
+      !formDataStep1.nombreCompleto ||
+      !formDataStep1.numeroTelefono ||
+      !formDataStep1.correoElectronico
+    ) {
+      alert("Por favor, complete todos los campos.");
       return;
     }
-  
+
     // Validamos que el correo tenga un formato correcto
     if (!handleEmailValidation(formDataStep1.correoElectronico)) {
-      alert('Por favor, ingrese un correo electrónico válido.');
+      alert("Por favor, ingrese un correo electrónico válido.");
       return;
     }
-  
+
     // Formateamos el número porque manychat solo acepta numeros sin el signo + ni espacios
-    const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(/\s|\+/g, '');
-    setFormDataStep1({ ...formDataStep1, numeroTelefono: formattedPhoneNumber });
-  
+    const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(
+      /\s|\+/g,
+      ""
+    );
+    setFormDataStep1({
+      ...formDataStep1,
+      numeroTelefono: formattedPhoneNumber,
+    });
+
     // Enviar datos del primer paso
     try {
-      const response = await fetch('endpoint api', {
-        method: 'POST',
+      const response = await fetch("endpoint api", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formDataStep1),
       });
-  
+
       if (response.ok) {
-        alert('Datos del primer paso del formulario enviados exitosamente');
+        alert("Datos del primer paso del formulario enviados exitosamente");
         setStep(2); // Cambiar al siguiente paso
       } else {
-        alert('Por favor, inténtalo de nuevo.');
+        alert("Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
-      console.error('Error al enviar datos del primer paso del formulario:', error);
-      alert('Hubo un problema al enviar los datos del primer paso del formulario. Por favor, inténtalo de nuevo.');
+      console.error(
+        "Error al enviar datos del primer paso del formulario:",
+        error
+      );
+      alert(
+        "Hubo un problema al enviar los datos del primer paso del formulario. Por favor, inténtalo de nuevo."
+      );
     }
   };
-  
+
   const handleSubmitStep2 = async () => {
     try {
-      const response = await fetch('endpoint api', {
-        method: 'POST',
+      const response = await fetch("endpoint api", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formDataStep2),
       });
 
       if (response.ok) {
-        alert('Datos del segundo paso del formulario enviados exitosamente');
+        alert("Datos del segundo paso del formulario enviados exitosamente");
       } else {
-        alert('Hubo un problema al enviar los datos del segundo paso del formulario. Por favor, inténtalo de nuevo.');
+        alert(
+          "Hubo un problema al enviar los datos del segundo paso del formulario. Por favor, inténtalo de nuevo."
+        );
       }
     } catch (error) {
-      console.error('Error al enviar datos del segundo paso del formulario:', error);
-      alert('Hubo un problema al enviar los datos del segundo paso del formulario. Por favor, inténtalo de nuevo.');
+      console.error(
+        "Error al enviar datos del segundo paso del formulario:",
+        error
+      );
+      alert(
+        "Hubo un problema al enviar los datos del segundo paso del formulario. Por favor, inténtalo de nuevo."
+      );
     }
   };
 
   const handleDimensionChange = (index, value) => {
-    const dimensions = [...formDataStep2.dimensionesMascota.split(',')];
+    const dimensions = [...formDataStep2.dimensionesMascota.split(",")];
     dimensions[index] = value;
-    setFormDataStep2({ ...formDataStep2, dimensionesMascota: dimensions.join(',') });
+    setFormDataStep2({
+      ...formDataStep2,
+      dimensionesMascota: dimensions.join(","),
+    });
   };
 
   const handleSubmit = () => {
@@ -182,22 +230,41 @@ const Form = () => {
     } else if (step === 2) {
       handleSubmitStep2();
 
-      console.log(JSON.stringify(formDataStep1))
+      console.log(JSON.stringify(formDataStep1));
     }
   };
 
-
   // -------
-  const tooltipContent = "Braquicéfalo: Se refiere a mascotas con cabezas cortas y achatadas. <br>&nbsp; asa";
 
   function InfoRazaMascota() {
     return (
       <div>
-        <a id="my-anchor-element">Raza de la Mascota:</a>
-        <Tooltip
-          anchorSelect="#my-anchor-element"
-          content={tooltipContent}
-        />
+        Raza de la Mascota:
+
+        <a data-tooltip-id="my-tooltip-children-multiline">
+          *
+        </a>
+        <Tooltip id="my-tooltip-children-multiline">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <ol>
+              <li>
+                Braquicéfalo: Se refiere a mascotas con cabezas cortas y
+                achatadas. <br />
+                Ejemplo: Bulldog francés, pug.
+              </li>
+              <li>
+                Peligrosos: Mascotas que pueden representar un riesgo para la
+                seguridad debido a su tamaño, fuerza o comportamiento. <br />
+                Ejemplo: Algunas razas grandes o con historial de agresividad.
+              </li>
+              <li>
+                General: Mascotas comunes que no tienen características
+                particulares en términos de tamaño, forma o peligrosidad. <br />
+                Ejemplo: Perros mestizos, gatos domésticos
+              </li>
+            </ol>
+          </div>
+        </Tooltip>
       </div>
     );
   }
@@ -228,7 +295,12 @@ const Form = () => {
                   international
                   defaultCountry="CO"
                   value={formDataStep1.numeroTelefono}
-                  onChange={(value) => setFormDataStep1({ ...formDataStep1, numeroTelefono: value })}
+                  onChange={(value) =>
+                    setFormDataStep1({
+                      ...formDataStep1,
+                      numeroTelefono: value,
+                    })
+                  }
                 />
               </label>
             </div>
@@ -245,7 +317,11 @@ const Form = () => {
                 />
               </label>
             </div>
-            <button type="button" className="btn btn-primary" onClick={handleNextStep}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleNextStep}
+            >
               Siguiente
             </button>
           </>
@@ -256,7 +332,10 @@ const Form = () => {
             <div className="mb-3">
               <label htmlFor="paisDestino" className="form-label">
                 País de Destino:
-                <Select options={countriesList} onChange={handleCountryChange} />
+                <Select
+                  options={countriesList}
+                  onChange={handleCountryChange}
+                />
               </label>
             </div>
             <div className="mb-3">
@@ -270,11 +349,19 @@ const Form = () => {
                 Tipo de Mascota:
                 <Select
                   options={[
-                    { value: 'Perro', label: 'Perro' },
-                    { value: 'Gato', label: 'Gato' }
+                    { value: "Perro", label: "Perro" },
+                    { value: "Gato", label: "Gato" },
                   ]}
-                  onChange={(selectedOption) => setFormDataStep2({ ...formDataStep2, tipoMascota: selectedOption.value })}
-                  value={{ value: formDataStep2.tipoMascota, label: formDataStep2.tipoMascota }}
+                  onChange={(selectedOption) =>
+                    setFormDataStep2({
+                      ...formDataStep2,
+                      tipoMascota: selectedOption.value,
+                    })
+                  }
+                  value={{
+                    value: formDataStep2.tipoMascota,
+                    label: formDataStep2.tipoMascota,
+                  }}
                   isSearchable={false}
                   required
                 />
@@ -285,19 +372,25 @@ const Form = () => {
               <InfoRazaMascota />
                 <Select
                   options={[
-                    { value: 'Braquicéfalo', label:  'Braquicéfalo'},
-                    { value: 'Peligrosos', label: 'Peligrosos' },
-                    { value: 'General', label: 'General' }
+                    { value: "Braquicéfalo", label: "Braquicéfalo" },
+                    { value: "Peligrosos", label: "Peligrosos" },
+                    { value: "General", label: "General" },
                   ]}
-                  onChange={(selectedOption) => setFormDataStep2({ ...formDataStep2, razaMascota: selectedOption.value })}
-                  value={{ value: formDataStep2.razaMascota, label: formDataStep2.razaMascota }}
+                  onChange={(selectedOption) =>
+                    setFormDataStep2({
+                      ...formDataStep2,
+                      razaMascota: selectedOption.value,
+                    })
+                  }
+                  value={{
+                    value: formDataStep2.razaMascota,
+                    label: formDataStep2.razaMascota,
+                  }}
                   isSearchable={false}
                   required
                 />
               </label>
-              <div>
-              
-              </div>
+              <div></div>
             </div>
             <div className="mb-3">
               <label htmlFor="pesoMascota" className="form-label">
@@ -317,15 +410,23 @@ const Form = () => {
                 Edad de la Mascota:
                 <Select
                   options={[
-                    { value: '4', label: 'Más de 4 semanas' },
-                    { value: '8', label: 'Más de 8 semanas' },
-                    { value: '12', label: 'Más de 12 semanas' },
-                    { value: '16', label: 'Más de 16 semanas' },
-                    { value: '20', label: 'Más de 20 semanas' },
-                    { value: '24', label: 'Más de 24 semanas' }
+                    { value: "4", label: "Más de 4 semanas" },
+                    { value: "8", label: "Más de 8 semanas" },
+                    { value: "12", label: "Más de 12 semanas" },
+                    { value: "16", label: "Más de 16 semanas" },
+                    { value: "20", label: "Más de 20 semanas" },
+                    { value: "24", label: "Más de 24 semanas" },
                   ]}
-                  onChange={(selectedOption) => setFormDataStep2({ ...formDataStep2, edadMascota: selectedOption.value })}
-                  value={{ value: formDataStep2.edadMascota, label: `Más de ${formDataStep2.edadMascota} semanas` }}
+                  onChange={(selectedOption) =>
+                    setFormDataStep2({
+                      ...formDataStep2,
+                      edadMascota: selectedOption.value,
+                    })
+                  }
+                  value={{
+                    value: formDataStep2.edadMascota,
+                    label: `Más de ${formDataStep2.edadMascota} semanas`,
+                  }}
                   isSearchable={false}
                   required
                 />
@@ -338,32 +439,33 @@ const Form = () => {
                   type="text"
                   className="form-control"
                   name="dimensionesMascota"
-                  value={formDataStep2.dimensionesMascota.split(',')[0]}
+                  value={formDataStep2.dimensionesMascota.split(",")[0]}
                   onChange={(e) => handleDimensionChange(0, e.target.value)}
                   placeholder="Largo (cm)"
-                
                 />
                 <input
                   type="text"
                   className="form-control"
                   name="dimensionesMascota"
-                  value={formDataStep2.dimensionesMascota.split(',')[1]}
+                  value={formDataStep2.dimensionesMascota.split(",")[1]}
                   onChange={(e) => handleDimensionChange(1, e.target.value)}
                   placeholder="Ancho (cm)"
-                  
                 />
                 <input
                   type="text"
                   className="form-control"
                   name="dimensionesMascota"
-                  value={formDataStep2.dimensionesMascota.split(',')[2]}
+                  value={formDataStep2.dimensionesMascota.split(",")[2]}
                   onChange={(e) => handleDimensionChange(2, e.target.value)}
                   placeholder="Alto (cm)"
-                
                 />
               </label>
             </div>
-            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSubmit}
+            >
               ENVIAR
             </button>
           </>
