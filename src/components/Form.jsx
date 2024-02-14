@@ -7,9 +7,9 @@ import "react-phone-number-input/style.css";
 const Form = () => {
   const [step, setStep] = useState(1);
   const [formDataStep1, setFormDataStep1] = useState({
-    nombreCompleto: "",
-    numeroTelefono: "",
-    correoElectronico: "",
+    name: "",
+    phone: "",
+    email: "",
   });
   const [formDataStep2, setFormDataStep2] = useState({
     paisDestino: "",
@@ -102,20 +102,20 @@ const Form = () => {
   const handleNextStep = () => {
     if (step === 1) {
       if (
-        !formDataStep1.nombreCompleto ||
-        !formDataStep1.numeroTelefono ||
-        !handleEmailValidation(formDataStep1.correoElectronico)
+        !formDataStep1.name ||
+        !formDataStep1.phone ||
+        !handleEmailValidation(formDataStep1.email)
       ) {
         alert("Por favor, complete todos los campos correctamente.");
         return;
       }
-      const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(
+      const formattedPhoneNumber = formDataStep1.phone.replace(
         /\s|\+/g,
         ""
       );
       setFormDataStep1({
         ...formDataStep1,
-        numeroTelefono: formattedPhoneNumber,
+        phone: formattedPhoneNumber,
       });
     }
 
@@ -136,57 +136,57 @@ const Form = () => {
   const handleSubmitStep1 = async () => {
     // Validamos que los campos son requeridos
     if (
-      !formDataStep1.nombreCompleto ||
-      !formDataStep1.numeroTelefono ||
-      !formDataStep1.correoElectronico
+      !formDataStep1.name ||
+      !formDataStep1.phone ||
+      !formDataStep1.email
     ) {
       alert("Por favor, complete todos los campos.");
       return;
     }
 
     // Validamos que el correo tenga un formato correcto
-    if (!handleEmailValidation(formDataStep1.correoElectronico)) {
+    if (!handleEmailValidation(formDataStep1.email)) {
       alert("Por favor, ingrese un correo electrónico válido.");
       return;
     }
 
     // Formateamos el número porque manychat solo acepta numeros sin el signo + ni espacios
-    const formattedPhoneNumber = formDataStep1.numeroTelefono.replace(
+    const formattedPhoneNumber = formDataStep1.phone.replace(
       /\s|\+/g,
       ""
     );
     setFormDataStep1({
       ...formDataStep1,
-      numeroTelefono: formattedPhoneNumber,
+      phone: formattedPhoneNumber,
     });
 
     // Enviar datos del primer paso
     try {
-      const response = await fetch("endpoint api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataStep1),
+      const response = await fetch("https://petfly-api.onrender.com/leads", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataStep1),
       });
-
-      if (response.ok) {
-        alert("Datos del primer paso del formulario enviados exitosamente");
-        setStep(2); // Cambiar al siguiente paso
+  
+      if (response.ok || response.type === 'opaque') {
+          alert("Datos del primer paso del formulario enviados exitosamente");
+          setStep(2); // Cambiar al siguiente paso
       } else {
-        alert("Por favor, inténtalo de nuevo.");
+          alert("Por favor, inténtalo de nuevo.");
       }
-    } catch (error) {
+  } catch (error) {
       console.error(
-        "Error al enviar datos del primer paso del formulario:",
-        error
+          "Error al enviar datos del primer paso del formulario:",
+          error
       );
       alert(
-        "Hubo un problema al enviar los datos del primer paso del formulario. Por favor, inténtalo de nuevo."
+          "Hubo un problema al enviar los datos del primer paso del formulario. Por favor, inténtalo de nuevo."
       );
-    }
-  };
-
+  }
+  }  
   const handleSubmitStep2 = async () => {
     try {
       const response = await fetch("endpoint api", {
@@ -276,43 +276,43 @@ const Form = () => {
         {step === 1 && (
           <>
             <div className="mb-3">
-              <label htmlFor="nombreCompleto" className="form-label">
+              <label htmlFor="name" className="form-label">
                 Nombre Completo:
                 <input
                   type="text"
                   className="form-control"
-                  id="nombreCompleto"
-                  name="nombreCompleto"
-                  value={formDataStep1.nombreCompleto}
+                  id="name"
+                  name="name"
+                  value={formDataStep1.name}
                   onChange={handleChangeStep1}
                 />
               </label>
             </div>
             <div className="mb-3">
-              <label htmlFor="numeroTelefono" className="form-label">
+              <label htmlFor="phone" className="form-label">
                 Número de Teléfono:
                 <PhoneInput
                   international
                   defaultCountry="CO"
-                  value={formDataStep1.numeroTelefono}
+                  value={formDataStep1.phone}
                   onChange={(value) =>
                     setFormDataStep1({
                       ...formDataStep1,
-                      numeroTelefono: value,
+                      phone: value,
                     })
                   }
                 />
               </label>
             </div>
             <div className="mb-3">
-              <label htmlFor="correoElectronico" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Correo Electrónico:
                 <input
                   type="text"
                   className="form-control"
-                  id="correoElectronico"
-                  name="correoElectronico"
-                  value={formDataStep1.correoElectronico}
+                  id="email"
+                  name="email"
+                  value={formDataStep1.email}
                   onChange={handleChangeStep1}
                 />
               </label>
@@ -320,7 +320,7 @@ const Form = () => {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={handleNextStep}
+              onClick={handleSubmit}
             >
               Siguiente
             </button>
