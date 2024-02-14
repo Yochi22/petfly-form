@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import PhoneInput from 'react-phone-number-input';
+import { Tooltip } from 'react-tooltip';
 import 'react-phone-number-input/style.css';
 
 const Form = () => {
@@ -185,6 +186,23 @@ const Form = () => {
     }
   };
 
+
+  // -------
+  const tooltipContent = "Braquicéfalo: Se refiere a mascotas con cabezas cortas y achatadas. <br>&nbsp; asa";
+
+  function InfoRazaMascota() {
+    return (
+      <div>
+        <a id="my-anchor-element">Raza de la Mascota:</a>
+        <Tooltip
+          anchorSelect="#my-anchor-element"
+          content={tooltipContent}
+        />
+      </div>
+    );
+  }
+  // ----------
+
   return (
     <div className="container">
       <form>
@@ -264,10 +282,10 @@ const Form = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="razaMascota" className="form-label">
-                Raza de la Mascota:
+              <InfoRazaMascota />
                 <Select
                   options={[
-                    { value: 'Braquicéfalo', label: 'Braquicéfalo' },
+                    { value: 'Braquicéfalo', label:  'Braquicéfalo'},
                     { value: 'Peligrosos', label: 'Peligrosos' },
                     { value: 'General', label: 'General' }
                   ]}
@@ -277,6 +295,9 @@ const Form = () => {
                   required
                 />
               </label>
+              <div>
+              
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="pesoMascota" className="form-label">
