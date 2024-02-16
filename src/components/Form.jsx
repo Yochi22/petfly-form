@@ -107,11 +107,11 @@ function Formulario() {
       maxHeight: formData.maxHeight || 0,
       phone: formData.phone.replace(/\s+/g, "").replace("+", ""), // Limpiar el número de teléfono antes de enviarlo
     };
-
+  
     if (validateFields()) {
       try {
         console.log("JSON a enviar:", JSON.stringify(cleanedFormData));
-
+  
         const response = await fetch("https://petfly-api.onrender.com/leads", {
           method: "POST",
           mode: "no-cors",
@@ -120,7 +120,7 @@ function Formulario() {
           },
           body: JSON.stringify(cleanedFormData),
         });
-
+  
         // Realizar la solicitud GET inmediatamente después de la validación
         const queryParams = new URLSearchParams({
           airlineid: cleanedFormData.airline,
@@ -130,10 +130,24 @@ function Formulario() {
           length: cleanedFormData.maxLength,
           width: cleanedFormData.maxWidth,
           height: cleanedFormData.maxHeight,
-          isdog: cleanedFormData.petType === "Dog",
-          isbrachycephalic: cleanedFormData.breed === "Brachycephalic",
         });
-
+  
+        if (cleanedFormData.petType.toLowerCase() === "dog") {
+          queryParams.set("isdog", "true");
+        } else if (cleanedFormData.petType.toLowerCase() === "cat") {
+          queryParams.set("iscat", "true");
+        }
+  
+        // Agregar isbrachycephalic si la mascota es brachycephalic
+        if (cleanedFormData.breed === "Brachycephalic") {
+          queryParams.append("isbrachycephalic", true);
+        }
+  
+        // Agregar ishazardous si la mascota es hazardous
+        if (cleanedFormData.breed === "Hazardous") {
+          queryParams.append("ishazardous", true);
+    
+        }
         const consultaResponse = await fetch(
           `https://petfly-api.onrender.com/services?${queryParams}`
         );
@@ -263,8 +277,8 @@ function Formulario() {
                     onChange={handleChange}
                   >
                     <option value="">Selecciona el tipo de mascota</option>
-                    <option value="dog">Perro</option>
-                    <option value="cat">Gato</option>
+                    <option value="Dog">Perro</option>
+                    <option value="Cat">Gato</option>
                   </select>
                 </div>
                 <div className="form-group">
