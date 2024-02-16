@@ -24,22 +24,28 @@ function Formulario() {
   // Nuevo estado para los datos de países
   const [countryGroupsData, setCountryGroupsData] = useState([]);
 
-  // Función para manejar el cambio de datos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const cleanedValue =
-      name === "phone" ? value.replace(/\s+/g, "").replace("+", "") : value;
-    const newValue = ["weight", "maxLength", "maxWidth", "maxHeight"].includes(
-      name
-    )
-      ? parseFloat(value === "" ? 0 : value)
-      : name === "age"
-      ? parseInt(value, 10)
-      : cleanedValue;
-
+  
+    let cleanedValue = value;
+  
+    if (name === "phone") {
+      // Elimina todos los espacios y el símbolo '+', si es que está presente
+      cleanedValue = value.replace(/\s+/g, "");
+    }
+  
+    console.log("Valor limpio:", cleanedValue);
+  
+    const newValue =
+      ["weight", "maxLength", "maxWidth", "maxHeight"].includes(name)
+        ? parseFloat(cleanedValue === "" ? 0 : cleanedValue)
+        : name === "age"
+        ? parseInt(cleanedValue, 10)
+        : cleanedValue;
+  
     // Ajusta aquí para que el valor del país sea country_group_id
-    const countryGroupId = name === "countryGroup" ? parseInt(value, 10) : value;
-
+    const countryGroupId = name === "countryGroup" ? parseInt(cleanedValue, 10) : cleanedValue;
+  
     setFormData({ ...formData, [name]: newValue });
   };
 
@@ -98,16 +104,16 @@ function Formulario() {
     return true;
   };
 
-  // Función para manejar el envío del formulario
   const handleSubmit = async () => {
+    // Elimina el símbolo '+' del número de teléfono antes de enviarlo
+    const cleanedPhone = formData.phone.replace(/\s+/g, "").replace("+", "");
     const cleanedFormData = {
       ...formData,
       maxLength: formData.maxLength || 0,
       maxWidth: formData.maxWidth || 0,
       maxHeight: formData.maxHeight || 0,
-      phone: formData.phone.replace(/\s+/g, "").replace("+", ""), // Limpiar el número de teléfono antes de enviarlo
+      phone: cleanedPhone,
     };
-  
     if (validateFields()) {
       try {
         console.log("JSON a enviar:", JSON.stringify(cleanedFormData));
@@ -395,19 +401,15 @@ function Formulario() {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="phone">Teléfono</label>
-                  <input
-                    type="tel"
-                    className="form-control"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    pattern="^\+?\d{2}\s\d{10}$"
-                    placeholder="+57 3505297452"
-                    required
-                  />
-                </div>
+                <input
+  type="tel"
+  className="form-control"
+  name="phone"
+  value={formData.phone}
+  onChange={handleChange}
+  placeholder="+57 3505297452"
+  required
+/>
                 <button
                   type="button"
                   className="btn btn-success"
