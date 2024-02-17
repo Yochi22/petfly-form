@@ -161,6 +161,9 @@ function Formulario() {
         if (consultaResponse.ok) {
           const data = await consultaResponse.json();
           setApiData(data); 
+          console.log(data)
+          setShowResults(true)
+   
         } else {
           console.error(
             "Error en la solicitud GET:",
@@ -273,6 +276,7 @@ function Formulario() {
         }
       } catch (error) {
         console.error("Error en la petición GET:", error);
+        console.log(data)
       }
     }
   };
