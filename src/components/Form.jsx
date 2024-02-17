@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+
+
 function Formulario() {
   const [formData, setFormData] = useState({
     countryGroup: "",
@@ -16,40 +18,40 @@ function Formulario() {
     phone: "",
   });
 
-  const [step, setStep] = useState(1); // Controla el paso actual del formulario
-  const [error, setError] = useState(""); // Manejar errores de validación
+  const [step, setStep] = useState(1);
+  const [error, setError] = useState(""); 
   const [countries, setCountries] = useState([]);
   const [airlinesData, setAirlinesData] = useState([]);
-
-  // Nuevo estado para los datos de países
   const [countryGroupsData, setCountryGroupsData] = useState([]);
+   const [apiData, setApiData] = useState([]);
+  const [showResults, setShowResults] = useState(false); //
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     let cleanedValue = value;
-  
+
     if (name === "phone") {
-      // Elimina todos los espacios y el símbolo '+', si es que está presente
+    
       cleanedValue = value.replace(/\s+/g, "");
     }
-  
+
     console.log("Valor limpio:", cleanedValue);
-  
+
     const newValue =
       ["weight", "maxLength", "maxWidth", "maxHeight"].includes(name)
         ? parseFloat(cleanedValue === "" ? 0 : cleanedValue)
         : name === "age"
         ? parseInt(cleanedValue, 10)
         : cleanedValue;
-  
-    // Ajusta aquí para que el valor del país sea country_group_id
-    const countryGroupId = name === "countryGroup" ? parseInt(cleanedValue, 10) : cleanedValue;
-  
+
+   
+    const countryGroupId =
+      name === "countryGroup" ? parseInt(cleanedValue, 10) : cleanedValue;
+
     setFormData({ ...formData, [name]: newValue });
   };
 
-  // Función para validar los campos requeridos en el paso actual
   const validateFields = () => {
     const {
       countryGroup,
@@ -65,13 +67,8 @@ function Formulario() {
 
     switch (step) {
       case 1:
-        if (
-          !countryGroup ||
-          !airline ||
-          countryGroup === "" ||
-          airline === ""
-        ) {
-          // Añade esta condición
+        if (!countryGroup || !airline || countryGroup === "" || airline === "") {
+       
           setError("Por favor, completa todos los campos.");
           return false;
         }
@@ -83,7 +80,13 @@ function Formulario() {
         }
         break;
       case 3:
-        if (!weight || !age || !name || !email || !phone) {
+        if (!weight || !age) {
+          setError("Por favor, completa todos los campos.");
+          return false;
+        }
+        break;
+      case 4:
+        if (!name || !email || !phone) {
           setError("Por favor, completa todos los campos.");
           return false;
         }
@@ -105,7 +108,6 @@ function Formulario() {
   };
 
   const handleSubmit = async () => {
-    // Elimina el símbolo '+' del número de teléfono antes de enviarlo
     const cleanedPhone = formData.phone.replace(/\s+/g, "").replace("+", "");
     const cleanedFormData = {
       ...formData,
@@ -114,10 +116,11 @@ function Formulario() {
       maxHeight: formData.maxHeight || 0,
       phone: cleanedPhone,
     };
+
     if (validateFields()) {
       try {
         console.log("JSON a enviar:", JSON.stringify(cleanedFormData));
-  
+
         const response = await fetch("https://petfly-api.onrender.com/leads", {
           method: "POST",
           mode: "no-cors",
@@ -126,8 +129,7 @@ function Formulario() {
           },
           body: JSON.stringify(cleanedFormData),
         });
-  
-        // Realizar la solicitud GET inmediatamente después de la validación
+
         const queryParams = new URLSearchParams({
           airlineid: cleanedFormData.airline,
           countrygroupid: cleanedFormData.countryGroup,
@@ -137,30 +139,28 @@ function Formulario() {
           width: cleanedFormData.maxWidth,
           height: cleanedFormData.maxHeight,
         });
-  
+
         if (cleanedFormData.petType.toLowerCase() === "dog") {
           queryParams.set("isdog", "true");
         } else if (cleanedFormData.petType.toLowerCase() === "cat") {
           queryParams.set("iscat", "true");
         }
-  
-        // Agregar isbrachycephalic si la mascota es brachycephalic
+
         if (cleanedFormData.breed === "Brachycephalic") {
           queryParams.append("isbrachycephalic", true);
         }
-  
-        // Agregar ishazardous si la mascota es hazardous
+
         if (cleanedFormData.breed === "Hazardous") {
           queryParams.append("ishazardous", true);
-    
         }
+
         const consultaResponse = await fetch(
           `https://petfly-api.onrender.com/services?${queryParams}`
         );
 
         if (consultaResponse.ok) {
           const data = await consultaResponse.json();
-          console.log("Respuesta de la consulta GET:", data);
+          setApiData(data); 
         } else {
           console.error(
             "Error en la solicitud GET:",
@@ -173,14 +173,18 @@ function Formulario() {
     }
   };
 
-  // Función para manejar el cambio de paso del formulario
   const handleNextStep = () => {
     if (validateFields()) {
       setStep(step + 1);
     }
   };
 
-  // Obtener países y aerolíneas al cargar el componente
+  const handlePreviousStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -189,7 +193,7 @@ function Formulario() {
         );
         if (response.ok) {
           const data = await response.json();
-          setCountryGroupsData(data); // Actualiza el estado de los datos de países
+          setCountryGroupsData(data); 
         } else {
           console.error("Error al obtener los países.");
         }
@@ -218,6 +222,61 @@ function Formulario() {
     fetchAirlines();
   }, []);
 
+  const handleGetResults = async () => {
+    if (validateFields()) {
+      try {
+        
+        const queryParams = new URLSearchParams({
+       
+          airlineid: formData.airline,
+          countrygroupid: formData.countryGroup,
+          weight: formData.weight,
+          age: formData.age,
+          length: formData.maxLength,
+          width: formData.maxWidth,
+          height: formData.maxHeight,
+        });
+
+        if (formData.petType.toLowerCase() === "dog") {
+          queryParams.set("isdog", "true");
+        } else if (formData.petType.toLowerCase() === "cat") {
+          queryParams.set("iscat", "true");
+        }
+
+        if (formData.breed === "Brachycephalic") {
+          queryParams.append("isbrachycephalic", true);
+        }
+
+        if (formData.breed === "Hazardous") {
+          queryParams.append("ishazardous", true);
+        }
+
+        const consultaResponse = await fetch(
+          `https://petfly-api.onrender.com/services?${queryParams}`
+        );
+
+        if (consultaResponse.ok) {
+          const newData = await consultaResponse.json();
+      
+          const filteredData = newData.filter((newItem) => {
+           
+            return !apiData.some((item) => item.id === newItem.id);
+          });
+          
+          setApiData((prevData) => [...prevData, ...filteredData]);
+          setShowResults(true); 
+        } else {
+          console.error(
+            "Error en la solicitud GET:",
+            consultaResponse.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error en la petición GET:", error);
+      }
+    }
+  };
+
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -225,6 +284,7 @@ function Formulario() {
           <form>
             {step === 1 && (
               <>
+                {/* Paso 1 */}
                 <div className="form-group">
                   <label htmlFor="countryGroup">
                     ¿Cuál es el país de destino?
@@ -263,17 +323,11 @@ function Formulario() {
                     ))}
                   </select>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleNextStep}
-                >
-                  Siguiente
-                </button>
               </>
             )}
             {step === 2 && (
               <>
+                {/* Paso 2 */}
                 <div className="form-group">
                   <label htmlFor="petType">Selecciona el tipo de mascota</label>
                   <select
@@ -303,17 +357,11 @@ function Formulario() {
                     <option value="General">General</option>
                   </select>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleNextStep}
-                >
-                  Siguiente
-                </button>
               </>
             )}
             {step === 3 && (
               <>
+                {/* Paso 3 */}
                 <div className="form-group">
                   <label htmlFor="weight">Peso de la mascota(Kg)</label>
                   <input
@@ -379,6 +427,11 @@ function Formulario() {
                     </div>
                   </div>
                 </div>
+              </>
+            )}
+            {step === 4 && (
+              <>
+                {/* Paso 4 */}
                 <div className="form-group">
                   <label htmlFor="name">Nombre</label>
                   <input
@@ -401,26 +454,63 @@ function Formulario() {
                     required
                   />
                 </div>
-                <input
-  type="tel"
-  className="form-control"
-  name="phone"
-  value={formData.phone}
-  onChange={handleChange}
-  placeholder="+57 3505297452"
-  required
-/>
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={handleSubmit}
-                >
-                  Conocer resultados
-                </button>
+                <div className="form-group">
+                  <label htmlFor="phone">Teléfono</label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </>
             )}
             <div className="text-danger">{error}</div>
+            <div className="row">
+              {step > 1 && (
+                <div className="col-md-6">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handlePreviousStep}
+                  >
+                    Atrás
+                  </button>
+                </div>
+              )}
+              <div className="col-md-6 text-right">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={step === 4 ? handleSubmit : handleNextStep}
+                >
+                  {step === 4 ? "Conocer resultados" : "Siguiente"}
+                </button>
+              </div>
+            </div>
           </form>
+        {showResults && (
+            <>
+              <h2>Resultados de la consulta</h2>
+              {/* Mapeo de los resultados de la API */}
+              {apiData.length > 0 ? (
+                apiData.map((result, index) => (
+                  <div key={index} className="api-result">
+                    <h3>{result.name}</h3>
+                    <p>Precio: {result.price} {result.currency}</p>
+                    <p>Dimensiones máximas: {result.max_length} x {result.max_width} x {result.max_height}</p>
+                    <p>Extras: {result.extras ? result.extras : "N/A"}</p>
+                    <p>Descripción: {result.description}</p>
+                    <p>Comentarios: {result.comments}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No hay resultados disponibles.</p>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
