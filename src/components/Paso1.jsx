@@ -1,8 +1,9 @@
 import React from "react";
 
-const Paso1 = ({ formData, countryGroupsData, airlinesData, handleChange }) => {
+function Paso1({ formData, handleChange, countryGroupsData, airlinesData }) {
   return (
     <>
+      {/* Paso 1 */}
       <div className="form-group">
         <label htmlFor="countryGroup">¿Cuál es el país de destino?</label>
         <select
@@ -15,7 +16,10 @@ const Paso1 = ({ formData, countryGroupsData, airlinesData, handleChange }) => {
             Seleccione un país
           </option>
           {countryGroupsData.map((country) => (
-            <option key={country.country_group_id} value={country.country_group_id}>
+            <option
+              key={country.country_group_id}
+              value={country.country_group_id}
+            >
               {country.name}
             </option>
           ))}
@@ -41,6 +45,6 @@ const Paso1 = ({ formData, countryGroupsData, airlinesData, handleChange }) => {
       </div>
     </>
   );
-};
+}
 
 export default Paso1;

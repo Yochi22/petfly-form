@@ -1,8 +1,9 @@
 import React from "react";
 
-const Paso4 = ({ formData, handleChange }) => {
+function Paso4({ formData, handleChange }) {
   return (
     <>
+      {/* Paso 4 */}
       <div className="form-group">
         <label htmlFor="name">Nombre</label>
         <input
@@ -26,19 +27,18 @@ const Paso4 = ({ formData, handleChange }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="phone">Número de Teléfono</label>
+        <label htmlFor="phone">Teléfono</label>
         <input
           type="tel"
           className="form-control"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          placeholder="+57 3505297452"
           required
         />
       </div>
     </>
   );
-};
+}
 
 export default Paso4;

@@ -1,8 +1,9 @@
 import React from "react";
 
-const Paso2 = ({ formData, handleChange }) => {
+function Paso2({ formData, handleChange }) {
   return (
     <>
+      {/* Paso 2 */}
       <div className="form-group">
         <label htmlFor="petType">Selecciona el tipo de mascota</label>
         <select
@@ -32,6 +33,6 @@ const Paso2 = ({ formData, handleChange }) => {
       </div>
     </>
   );
-};
+}
 
 export default Paso2;
