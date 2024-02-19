@@ -1,0 +1,5 @@
+.App {
+    background-color: red;
+    /* border: 2px solid red !important; */
+    display: flex;
+}
