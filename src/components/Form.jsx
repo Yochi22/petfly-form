@@ -3,6 +3,9 @@ import Paso1 from "./Paso1";
 import Paso2 from "./Paso2";
 import Paso3 from "./Paso3";
 import Paso4 from "./Paso4";
+import Error from "./Error";
+import SideMenu from "./SideMenu"
+import { useMediaQuery } from 'react-responsive';
 
 function Formulario() {
   const [formData, setFormData] = useState({
@@ -20,13 +23,21 @@ function Formulario() {
     phone: "",
   });
 
-  const [step, setStep] = useState(1);
   const [error, setError] = useState(""); 
   const [countries, setCountries] = useState([]);
   const [airlinesData, setAirlinesData] = useState([]);
   const [countryGroupsData, setCountryGroupsData] = useState([]);
   const [apiData, setApiData] = useState([]);
   const [showResults, setShowResults] = useState(false); 
+
+  const [step, setStep] = useState(1);
+  const stepNames = [
+    "País y destino y aerolínea",
+    "Tipo y raza de mascota",
+    "Edad, peso y dimensiones",
+    "Datos básicos",
+    "Resultados"
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -184,6 +195,11 @@ function Formulario() {
     }
   };
 
+  const handleStepClick = (stepNumber) => {
+    setStep(stepNumber);
+  };
+
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -221,103 +237,119 @@ function Formulario() {
     fetchAirlines();
   }, []);
 
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   return (
     <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <form>
-            {/* Renderización condicional de los pasos del formulario */}
-            {step === 1 && (
-              <Paso1
-                formData={formData}
-                handleChange={handleChange}
-                countryGroupsData={countryGroupsData}
-                airlinesData={airlinesData}
-              />
-            )}
-            {step === 2 && (
-              <Paso2
-                formData={formData}
-                handleChange={handleChange}
-              />
-            )}
-            {step === 3 && (
-              <Paso3
-                formData={formData}
-                handleChange={handleChange}
-              />
-            )}
-            {step === 4 && (
-              <Paso4
-                formData={formData}
-                handleChange={handleChange}
-              />
-            )}
-            {/* Botones de navegación */}
-            <div className="text-danger">{error}</div>
-            <div className="row">
-              {step > 1 && step < 4 && (
-                <div className="col-md-6">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={handlePreviousStep}
-                  >
-                    Atrás
-                  </button>
-                </div>
-              )}
-              <div className="col-md-6 text-right">
-                {step < 4 && (
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleNextStep}
-                  >
-                    Siguiente
-                  </button>
-                )}
-                {step === 4 && (
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleSubmit}
-                  >
-                    Conocer resultados
-                  </button>
-                )}
-              </div>
+    <div className="row justify-content-center">
+    <div className="col-md-8">
+          {/* Renderización condicional del SideMenu */}
+          {!isMobile && (
+            <div className="col-md-3">
+              <SideMenu currentStep={step} stepNames={stepNames} handleStepClick={handleStepClick} showResults={showResults}/>
             </div>
-          </form>
-        </div>
-      </div>
-      {showResults && step > 4 && (
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-8">
-              <h2>Resultados de la consulta</h2>
-              {apiData.length > 0 ? (
-                apiData.map((result, index) => (
-                  <div key={index} className="api-result">
-                    <h3>{result.name}</h3>
-                    <p>Precio: {result.price} {result.currency}</p>
-                    <p>Dimensiones máximas: {result.max_length} x {result.max_width} x {result.max_height}</p>
-                    <p>Extras: {result.extras ? result.extras : "N/A"}</p>
-                    <p>Descripción: {result.description}</p>
-                    <p>Comentarios: {result.comments}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No hay resultados disponibles.</p>
+          )}
+        <form>
+          {/* Renderización condicional de los pasos del formulario */}
+          {step === 1 && (
+            <Paso1
+              formData={formData}
+              handleChange={handleChange}
+              countryGroupsData={countryGroupsData}
+              airlinesData={airlinesData}
+            />
+          )}
+          {step === 2 && (
+            <Paso2
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
+          {step === 3 && (
+            <Paso3
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
+          {step === 4 && (
+            <Paso4
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
+          {/* Botones de navegación */}
+          <div className="text-danger">{error}</div>
+          <div className="row">
+            {step > 1 && step < 5 && (
+              <div className="col-md-6">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handlePreviousStep}
+                >
+                  Atrás
+                </button>
+              </div>
+            )}
+            <div className="col-md-6 text-right">
+              {step < 4 && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleNextStep}
+                >
+                  Siguiente
+                </button>
+              )}
+              {step === 4 && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                >
+                  Conocer resultados
+                </button>
               )}
             </div>
           </div>
-        </div>
-      )}
+        </form>
+      </div>
     </div>
-  );
-}
-
+    {showResults && step > 4 && (
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            {/* Mostrar el título solo si hay resultados */}
+            {apiData.length > 0 && (
+              <h2>Resultados de la consulta</h2>
+            )}
+            {apiData.length > 0 ? (
+              <>
+                {apiData.map((result, index) => (
+                  <div key={index} className="api-result">
+                    <h3>{result.name}</h3>
+                    <p>
+                      Costo: {result.price === 0 ? "GRATIS" : result.price === null ? "El precio varía según distintas condiciones" : `${result.price} ${result.currency}`}
+                    </p>
+                    {result.extras !== null && (
+                      <p>Consideraciones extras: {result.extras}</p>
+                    )}
+                  </div>
+                ))}
+                <div className="additional-info">
+                  <p>Trámites veterinarios: {apiData[0].description}</p>
+                  <p>Precio aproximado de los trámites: {apiData[0].comments}</p>
+                </div>
+              </>
+            ) : (
+              <Error />
+            )} 
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+);
+ }  
 export default Formulario;
 
 
