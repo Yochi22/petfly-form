@@ -5,6 +5,7 @@ import Paso3 from "./Paso3";
 import Paso4 from "./Paso4";
 import Error from "./Error";
 import SideMenu from "./SideMenu"
+import { useMediaQuery } from 'react-responsive';
 
 function Formulario() {
   const [formData, setFormData] = useState({
@@ -236,13 +237,17 @@ function Formulario() {
     fetchAirlines();
   }, []);
 
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   return (
     <div className="container">
     <div className="row justify-content-center">
-      <div className="col-md-8">
-        <div className="col-md-3">
-          <SideMenu currentStep={step} stepNames={stepNames} handleStepClick={handleStepClick} showResults={showResults}/>
-        </div>
+    <div className="col-md-8">
+          {/* Renderización condicional del SideMenu */}
+          {!isMobile && (
+            <div className="col-md-3">
+              <SideMenu currentStep={step} stepNames={stepNames} handleStepClick={handleStepClick} showResults={showResults}/>
+            </div>
+          )}
         <form>
           {/* Renderización condicional de los pasos del formulario */}
           {step === 1 && (
