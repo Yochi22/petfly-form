@@ -1,0 +1,24 @@
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-point {
+  width: 8px;
+  height: 8px;
+  background-color: #007bff;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.progress-point.active {
+  background-color: #28a745; /* Color de punto activo */
+}
+
+  

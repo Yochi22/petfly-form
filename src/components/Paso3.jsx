@@ -5,13 +5,14 @@ function Paso3({ formData, handleChange }) {
     <>
       {/* Paso 3 */}
       <div className="form-group">
-        <label htmlFor="weight">Peso de la mascota(Kg)</label>
+        <label htmlFor="weight">Peso de la mascota</label>
         <input
           type="number"
           className="form-control"
           name="weight"
           value={formData.weight}
           onChange={handleChange}
+          placeholder="KG"
           required
         />
       </div>
@@ -35,7 +36,7 @@ function Paso3({ formData, handleChange }) {
         </select>
       </div>
       <div className="form-group">
-        <label>Dimensiones de la mascota (en cm)</label>
+        <label>Dimensiones de la mascota</label>
         <div className="row">
           <div className="col-md-4">
             <label htmlFor="maxLength">Longitud</label>
@@ -45,6 +46,7 @@ function Paso3({ formData, handleChange }) {
               name="maxLength"
               value={formData.maxLength}
               onChange={handleChange}
+              placeholder="CM (Opcional)"
             />
           </div>
           <div className="col-md-4">
@@ -55,6 +57,7 @@ function Paso3({ formData, handleChange }) {
               name="maxWidth"
               value={formData.maxWidth}
               onChange={handleChange}
+              placeholder="CM (Opcional)"
             />
           </div>
           <div className="col-md-4">
@@ -63,6 +66,7 @@ function Paso3({ formData, handleChange }) {
               type="number"
               className="form-control"
               name="maxHeight"
+              placeholder="CM (Opcional)"
               value={formData.maxHeight}
               onChange={handleChange}
             />
