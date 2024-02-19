@@ -1,24 +1,42 @@
 .side-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px; 
+  height: 100%;
+  background-color: #ffffff; 
+  padding: 20px;
 }
 
-.progress-bar {
-  width: 10px;
+.logo-container {
+  text-align: center;
   margin-bottom: 20px;
 }
 
+.logo {
+  width: 100px; 
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+}
+
 .progress-point {
-  width: 8px;
-  height: 8px;
-  background-color: #007bff;
-  border-radius: 50%;
+  background-color: #ccc; 
+  padding: 10px;
   margin-bottom: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .progress-point.active {
-  background-color: #28a745; /* Color de punto activo */
+  background-color: #007bff; 
+  color: #fff; 
 }
-
-  
