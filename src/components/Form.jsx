@@ -3,7 +3,6 @@ import Paso1 from "./Paso1";
 import Paso2 from "./Paso2";
 import Paso3 from "./Paso3";
 import Paso4 from "./Paso4";
-import './form.css'
 
 function Formulario() {
   const [formData, setFormData] = useState({
