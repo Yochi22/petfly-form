@@ -1,5 +1,4 @@
 .contacto {
-    background-color: #f2f2f2;
     padding: 20px;
     text-align: center;
     margin-top: 200px;
@@ -28,8 +27,6 @@
     margin-top: 20px;
     transition: background-color 0.3s ease;
   }
-  
-  body{    background-color: #f2f2f2;}
 
   .whatsapp-button:hover {
     background-color: #128c7e;
