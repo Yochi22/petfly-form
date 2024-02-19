@@ -3,6 +3,7 @@ import Paso1 from "./Paso1";
 import Paso2 from "./Paso2";
 import Paso3 from "./Paso3";
 import Paso4 from "./Paso4";
+import Error from "./Error";
 
 function Formulario() {
   const [formData, setFormData] = useState({
@@ -292,32 +293,41 @@ function Formulario() {
         </div>
       </div>
       {showResults && step > 4 && (
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-8">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            {/* Mostrar el título solo si hay resultados */}
+            {apiData.length > 0 && (
               <h2>Resultados de la consulta</h2>
-              {apiData.length > 0 ? (
-                apiData.map((result, index) => (
+            )}
+            {apiData.length > 0 ? (
+              <>
+                {apiData.map((result, index) => (
                   <div key={index} className="api-result">
                     <h3>{result.name}</h3>
-                    <p>Precio: {result.price} {result.currency}</p>
-                    <p>Dimensiones máximas: {result.max_length} x {result.max_width} x {result.max_height}</p>
-                    <p>Extras: {result.extras ? result.extras : "N/A"}</p>
-                    <p>Descripción: {result.description}</p>
-                    <p>Comentarios: {result.comments}</p>
+                    <p>
+                      Costo: {result.price === 0 ? "GRATIS" : result.price === null ? "El precio varía según distintas condiciones" : `${result.price} ${result.currency}`}
+                    </p>
+                    {result.extras !== null && (
+                      <p>Consideraciones extras: {result.extras}</p>
+                    )}
                   </div>
-                ))
+                ))}
+                <div className="additional-info">
+                  <p>Trámites veterinarios: {apiData[0].description}</p>
+                  <p>Precio aproximado de los trámites: {apiData[0].comments}</p>
+                </div>
+              </>
               ) : (
-                <p>No hay resultados disponibles.</p>
-              )}
+                <Error />
+              ) } 
             </div>
           </div>
         </div>
       )}
     </div>
   );
-}
-
+ }  
 export default Formulario;
 
 
