@@ -4,7 +4,7 @@ function Paso3({ formData, handleChange }) {
   return (
     <>
       {/* Paso 3 */}
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="weight">Peso de la mascota</label>
         <input
           type="number"
@@ -16,7 +16,7 @@ function Paso3({ formData, handleChange }) {
           required
         />
       </div>
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="age">Edad de la mascota</label>
         <select
           className="form-control"
@@ -35,7 +35,7 @@ function Paso3({ formData, handleChange }) {
           <option value="20">Más de 20 semanas</option>
         </select>
       </div>
-      <div className="form-group">
+      <div className="form-group form-option">
         <label>Dimensiones de la mascota</label>
         <div className="row">
           <div className="col-md-4">
