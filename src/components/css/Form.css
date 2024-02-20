@@ -16,6 +16,7 @@
 }
 
 .contenedor-padre-flex {
+    display: inline-block;
     margin: 0 2vw 0 2vw;
     display: flex;
     justify-content: space-between;

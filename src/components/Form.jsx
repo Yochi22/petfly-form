@@ -302,17 +302,19 @@ function Formulario() {
                   Siguiente
                 </button>
               )}
-          </div>
-          
+
               {step === 4 && (
                 <button
                   type="button"
-                  className="btn btn-primary "
+                  className="btn btn-primary"
                   onClick={handleSubmit}
                 >
                   Conocer resultados
                 </button>
               )}
+          </div>
+              
+              
             </div>
           
         </form>
