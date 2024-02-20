@@ -4,7 +4,7 @@ function Paso4({ formData, handleChange }) {
   return (
     <>
       {/* Paso 4 */}
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="name">Nombre</label>
         <input
           type="text"
@@ -15,7 +15,7 @@ function Paso4({ formData, handleChange }) {
           required
         />
       </div>
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="email">Correo Electrónico</label>
         <input
           type="email"
@@ -26,7 +26,7 @@ function Paso4({ formData, handleChange }) {
           required
         />
       </div>
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="phone">Teléfono</label>
         <input
           type="tel"

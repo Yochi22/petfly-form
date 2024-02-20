@@ -5,6 +5,7 @@ import Paso3 from "./Paso3";
 import Paso4 from "./Paso4";
 import Error from "./Error";
 import SideMenu from "./SideMenu"
+import './css/Form.css'
 import { useMediaQuery } from 'react-responsive';
 
 function Formulario() {
@@ -240,7 +241,7 @@ function Formulario() {
   return (
     <div className="container">
     <div className="row justify-content-center">
-    <div className="col-md-8">
+    <div className="col-md-8 prueba">
           {/* Renderización condicional del SideMenu */}
           {!isMobile && (
             <div className="col-md-3">
@@ -277,9 +278,10 @@ function Formulario() {
           )}
           {/* Botones de navegación */}
           <div className="text-danger">{error}</div>
-          <div className="row">
+          
+          <div className="row contenedor-padre-flex">
             {step > 1 && step < 5 && (
-              <div className="col-md-6">
+              <div className="col-md-6 d-flex justify-content-start">
                 <button
                   type="button"
                   className="btn btn-secondary"
@@ -289,7 +291,7 @@ function Formulario() {
                 </button>
               </div>
             )}
-            <div className="col-md-6 text-right">
+            <div className="col-md-6 d-flex justify-content-end ">
               {step < 4 && (
                 <button
                   type="button"
@@ -299,6 +301,7 @@ function Formulario() {
                   Siguiente
                 </button>
               )}
+
               {step === 4 && (
                 <button
                   type="button"
@@ -308,8 +311,11 @@ function Formulario() {
                   Conocer resultados
                 </button>
               )}
-            </div>
           </div>
+              
+              
+            </div>
+          
         </form>
       </div>
     </div>

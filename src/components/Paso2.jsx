@@ -4,7 +4,7 @@ function Paso2({ formData, handleChange }) {
   return (
     <>
       {/* Paso 2 */}
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="petType">Selecciona el tipo de mascota</label>
         <select
           className="form-control"
@@ -17,7 +17,7 @@ function Paso2({ formData, handleChange }) {
           <option value="Cat">Gato</option>
         </select>
       </div>
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="breed">Selecciona la raza de tu mascota</label>
         <select
           className="form-control"
