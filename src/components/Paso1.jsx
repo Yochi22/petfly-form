@@ -4,7 +4,7 @@ function Paso1({ formData, handleChange, countryGroupsData, airlinesData }) {
   return (
     <>
       {/* Paso 1 */}
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="countryGroup">¿Cuál es el país de destino?</label>
         <select
           className="form-control"
@@ -25,7 +25,7 @@ function Paso1({ formData, handleChange, countryGroupsData, airlinesData }) {
           ))}
         </select>
       </div>
-      <div className="form-group">
+      <div className="form-group form-option">
         <label htmlFor="airline">¿Con cuál aerolínea viajas?</label>
         <select
           className="form-control"
