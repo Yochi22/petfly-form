@@ -35,7 +35,6 @@ function Formulario() {
     "País y destino y aerolínea",
     "Tipo y raza de mascota",
     "Edad, peso y dimensiones",
-    "Datos básicos",
     "Resultados"
   ];
 
