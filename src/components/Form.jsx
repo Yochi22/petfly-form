@@ -44,13 +44,19 @@ function Formulario() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     let cleanedValue = value;
-
+  
     if (name === "phone") {
+      // Eliminar espacios en blanco
       cleanedValue = value.replace(/\s+/g, "");
+      // Verificar si el número de teléfono no comienza con "57" ni con '+'
+      if (!cleanedValue.startsWith("57") && !cleanedValue.startsWith("+")) {
+        // Si no comienza con "57" ni '+', agregamos '57' al principio
+        cleanedValue = `57${cleanedValue}`;
+      }
     }
-
+  
     const newValue = ["weight", "maxLength", "maxWidth", "maxHeight"].includes(
       name
     )
@@ -58,10 +64,10 @@ function Formulario() {
       : name === "age"
       ? parseInt(cleanedValue, 10)
       : cleanedValue;
-
+  
     const countryGroupId =
       name === "countryGroup" ? parseInt(cleanedValue, 10) : cleanedValue;
-
+  
     setFormData({ ...formData, [name]: newValue });
   };
 
@@ -342,7 +348,7 @@ function Formulario() {
                 </div>
                 {cabinaResults.length > 0 && (
                   <div className="viajes-cabina-container">
-                    <h3>Viajes en cabina con mascotas</h3>
+                    <h3>Viaje en cabina con tu mascota</h3>
                     <div className="viajes-cabina-grid">
                       {cabinaResults.map((result, index) => (
                         <div key={index} className="viaje-cabina-item">
@@ -416,7 +422,7 @@ function Formulario() {
                 )}
                 {bodegaResults.length > 0 && (
                   <div className="viajes-bodega-container">
-                    <h3>Viajes en bodega con mascotas</h3>
+                    <h3>Viaje en bodega</h3>
                     <div className="viajes-bodega-grid">
                       {bodegaResults.map((result, index) => (
                         <div key={index} className="viaje-bodega-item">
@@ -460,19 +466,19 @@ function Formulario() {
                           )}
                         </div>
                       ))}
-                      <div className="additional-info">
-                        <p>
-                          Trámites veterinarios:{" "}
-                          {apiData[0].description.replace("�", "ó")}
-                        </p>
-                        <p>
-                          Precio aproximado de los trámites:{" "}
-                          {apiData[0].comments.replace("�", "í")}
-                        </p>
-                      </div>
                     </div>
                   </div>
                 )}
+                 <div className="additional-info">
+                        <p>
+                          Trámites veterinarios:{" "}
+                          {apiData[0].description}
+                        </p>
+                        <p>
+                          Precio aproximado de los trámites:{" "}
+                          {apiData[0].comments}
+                        </p>
+                      </div>
               </>
             ) : (
               <Error />

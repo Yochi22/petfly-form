@@ -35,7 +35,7 @@ function Paso4({ formData, handleChange }) {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          placeholder="+573505297452"
+          placeholder="+57 3505297452"
           required
         />
       </div>
