@@ -1,30 +1,194 @@
 .container {
-    /* border: 2px solid red !important; */
-    position: relative;
-    width: auto;
-    padding: 14vh 0 12vh 15vw;
+  position: relative;
+  width: auto;
+  padding: 14vh 0 12vh 15vw;
 }
 
 .form-option {
-    background-color: #f1f4f9;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 1rem;
-    margin: 1rem 0 1rem 0;
-    border-radius: 0.5rem;
-    font-weight: bold;
+  background-color: #f1f4f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem;
+  margin: 1rem 0 1rem 0;
+  border-radius: 0.5rem;
+  font-weight: bold;
 }
 
 .contenedor-padre-flex {
-    display: inline-block;
-    margin: 0 2vw 0 2vw;
-    display: flex;
-    justify-content: space-between;
+  display: inline-block;
+  margin: 0 2vw 0 2vw;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 18vh 3vw 0 3vw;
-    }
+  .container {
+      padding: 18vh 3vw 0 3vw;
+  }
+}
+
+.prueba h2 {
+  color: #0D3073;
+}
+
+.resultados-container {
+  background-color: #f1f4f9;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.title-additional-info {
+  color: #0D3073 !important;
+}
+
+.parrafo-additional-info {
+  color: #0D3073 !important;
+}
+
+.title-results h2{
+  text-align: center;
+  color: #0D3073;
+}
+
+.viajes-cabina-container h3 {
+  text-align: center;
+  color: #0D3073;
+}
+
+.viajes-bodega-container {
+  text-align: center;
+  color: #0D3073;
+}
+
+.viaje-bodega-item p{
+  color: #0D3073;
+}
+
+.viaje-cabina-item p{
+  color: #0D3073;
+}
+
+.viaje-bodega-item h4{
+  color: #0D3073;
+}
+
+.viaje-cabina-item h4{
+  color: #0D3073;
+}
+
+.viaje-cabina-item {
+ background-color: #007bff1c;
+ border-radius: 05px;
+}
+
+.viaje-bodega-item {
+  background-color: #007bff1c;
+ }
+/* Estilos para el contenido de cada elemento de resultado */
+.api-result-item-content {
+  background-color: #f1f4f9;
+  border-radius: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Centrar elementos horizontalmente */
+  padding: 20px; /* Añadir un poco de espacio interno */
+}
+
+/* Estilos para los títulos dentro de cada elemento de resultado */
+.api-result-item-content h4 {
+  text-align: center;
+  color: #0D3073;
+  margin: 0;
+}
+
+/* Estilos para los párrafos dentro de cada elemento de resultado */
+.api-result-item-content p {
+  text-align: center;
+  color: #0D3073;
+  margin: 0;
+}
+
+/* Estilos para el contenedor de botón */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Estilos para el botón */
+.whatsapp-button {
+  background-color: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos para el botón al pasar el ratón sobre él */
+.whatsapp-button:hover {
+  background-color: #128c7e;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  /* Cambiar la dirección de los resultados a columna en dispositivos móviles */
+  .api-result {
+      flex-direction: column;
+      margin-top: -200px;
+  }
+
+  /* Ajustar estilos del botón en dispositivos móviles */
+  .button-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  /* Ajustar estilos del botón en dispositivos móviles */
+  .whatsapp-button {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 10px;
+  }
+}
+
+/* Estilos para los contenedores de resultados */
+.viajes-cabina-container,
+.viajes-bodega-container {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center; /* Centrar el texto */
+}
+
+/* Estilos para los elementos individuales de resultado */
+.viajes-cabina-grid,
+.viajes-bodega-grid {
+  display: flex;
+  flex-wrap: wrap; /* Permitir que los elementos se envuelvan a la siguiente línea */
+  justify-content: center; /* Centrar los elementos horizontalmente */
+  margin-top: 20px; /* Espacio entre los contenedores de resultados */
+}
+
+/* Estilos para los elementos individuales de resultado */
+.viaje-cabina-item,
+.viaje-bodega-item {
+  flex: 0 0 calc(33.33% - 20px); /* Cada elemento ocupa inicialmente el 33.33% del ancho del contenedor, con un espacio entre ellos */
+  max-width: calc(33.33% - 20px); /* Ancho máximo para asegurar que cada elemento tenga el mismo tamaño */
+  margin: 10px; /* Espacio entre elementos */
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  /* Cambiar el ancho de los elementos individuales para que se muestren uno debajo del otro */
+  .viaje-cabina-item,
+  .viaje-bodega-item {
+    flex-basis: calc(100% - 20px); /* Cada elemento ocupa el 100% del ancho del contenedor, con un espacio entre ellos */
+    max-width: calc(100% - 20px); /* Ancho máximo para dispositivos móviles */
+  }
 }

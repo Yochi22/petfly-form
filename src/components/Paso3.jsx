@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/Pasos.css"
 
 function Paso3({ formData, handleChange }) {
   return (

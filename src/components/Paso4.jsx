@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/Pasos.css"
 
 function Paso4({ formData, handleChange }) {
   return (
@@ -34,6 +35,7 @@ function Paso4({ formData, handleChange }) {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
+          placeholder="+573505297452"
           required
         />
       </div>

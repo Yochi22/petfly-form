@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.jpeg"; 
+import logo from "../assets/logo.png"; 
 import "../../styles/SideMenu.css";
 
 const SideMenu = ({ currentStep, stepNames, handleStepClick, showResults }) => {
