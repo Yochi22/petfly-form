@@ -445,6 +445,10 @@ function Formulario() {
                     )}
                   </div>
                 ))}
+                 <div className="additional-info">
+                  <p>Trámites veterinarios: {apiData[0].description}</p>
+                  <p>Precio aproximado de los trámites: {apiData[0].comments}</p>
+                </div>
               </div>
             </div>
           )}
