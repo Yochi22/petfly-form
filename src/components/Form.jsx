@@ -245,7 +245,7 @@ function Formulario() {
     fetchAirlines();
   }, []);
 
-  const handleShowResults = (newData) => { 
+  const handleShowResults = (newData) => {
     setShowResults(true);
     const cabina = newData.filter((result) =>
       result.name.toUpperCase().includes("CABINA")
@@ -333,137 +333,155 @@ function Formulario() {
         </div>
       </div>
       {showResults && step > 4 && (
-  <div className="container">
-    <div className="row justify-content-center">
-      {apiData.length > 0 ? (
-        <>
-          <div className="title-results">
-            <h2>Costo de la aerolínea para tu mascota</h2>
-          </div>
-          {cabinaResults.length > 0 && (
-            <div className="viajes-cabina-container">
-              <h3>Viajes en cabina con mascotas</h3>
-              <div className="viajes-cabina-grid">
-                {cabinaResults.map((result, index) => (
-                  <div key={index} className="viaje-cabina-item">
-                    <h4>{result.name.toUpperCase()}</h4>
-                    <p>
-                      Costo:{" "}
-                      {result.price === 0
-                        ? "GRATIS"
-                        : result.price === null
-                        ? "El precio varía según distintas condiciones"
-                        : `${result.price} ${result.currency}`}
-                    </p>
-                    {result.name.toUpperCase() === "CABINA SIN CERTIFICADO" && (
-                      <p>
-                        Al cancelar el fee de la aerolínea, tu mascota puede viajar en cabina contigo.
-                      </p>
-                    )}
-                    {result.name.toUpperCase() === "CABINA CON CERTIFICADO" && (
-                      <p>
-                        Tu mascota califica al certificado de animal de apoyo emocional y podría viajar contigo sin costo adicional. Haz clic en el botón de WhatsApp para solicitarlo.
-                      </p>
-                    )}
-                    {result.name.toUpperCase() === "CABINA CON PERRO DE SERVICIO" && (
-                      <p>
-                        Tu perro podría ser un perro de servicio y podría viajar contigo en cabina sin costo adicional. Haz clic en el botón de WhatsApp para solicitarlo.
-                      </p>
-                    )}
-                    {result.name.toUpperCase() === "CABINA CON CERTIFICADO" && (
-                      <div className="button-container">
-                      <a
-                        href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="whatsapp-button"
-                      >
-                        WhatsApp
-                      </a>
-                    </div>
-                    ) }
-                     {result.name.toUpperCase() === "CABINA CON PERRO DE SERVICIO" && (
-                      <div className="button-container">
-                      <a
-                        href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="whatsapp-button"
-                      >
-                        WhatsApp
-                      </a>
-                    </div>
-                    ) }
-                    
-                    {result.extras !== null && (
-                      <p>Consideraciones extras: {result.extras}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          {bodegaResults.length > 0 && (
-            <div className="viajes-bodega-container">
-              <h3>Viajes en bodega con mascotas</h3>
-              <div className="viajes-bodega-grid">
-                {bodegaResults.map((result, index) => (
-                  <div key={index} className="viaje-bodega-item">
-                    <h4>{result.name.toUpperCase()}</h4>
-                    <p>
-                      Costo:{" "}
-                      {result.price === 0
-                        ? "GRATIS"
-                        : result.price === null
-                        ? "El precio varía según distintas condiciones"
-                        : `${result.price} ${result.currency}`}
-                    </p>
-                    {result.name.toUpperCase() === "BODEGA" && (
-                      <p>
-                        Al cancelar el fee de la aerolínea, tu mascota puede viajar en bodega.
-                      </p>
-                    )}
-                    {result.name.toUpperCase() === "BODEGA CON CERTIFICADO" && (
-                      <p>
-                        Tu mascota podría ser un animal de apoyo emocional y viajar en bodega sin gasto adicional.
-                      </p>
-                    )}
-                     {result.name.toUpperCase() === "BODEGA CON CERTIFICADO" && (
-                      <div className="button-container">
-                      <a
-                        href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="whatsapp-button"
-                      >
-                        WhatsApp
-                      </a>
-                    </div>
-                    ) }
-                    {result.extras !== null && (
-                      <p>Consideraciones extras: {result.extras}</p>
-                    )}
-                  </div>
-                ))}
-                 <div className="additional-info">
-                  <p>Trámites veterinarios: {apiData[0].description}</p>
-                  <p>Precio aproximado de los trámites: {apiData[0].comments}</p>
+        <div className="container container-results">
+          <div className="row justify-content-center">
+            {apiData.length > 0 ? (
+              <>
+                <div className="title-results">
+                  <h2>Costo de la aerolínea para tu mascota</h2>
                 </div>
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
-        <Error />
+                {cabinaResults.length > 0 && (
+                  <div className="viajes-cabina-container">
+                    <h3>Viajes en cabina con mascotas</h3>
+                    <div className="viajes-cabina-grid">
+                      {cabinaResults.map((result, index) => (
+                        <div key={index} className="viaje-cabina-item">
+                          <h4>{result.name.toUpperCase()}</h4>
+                          <p>
+                            Costo:{" "}
+                            {result.price === 0
+                              ? "GRATIS"
+                              : result.price === null
+                              ? "El precio varía según distintas condiciones"
+                              : `${result.price} ${result.currency}`}
+                          </p>
+                          {result.name.toUpperCase() ===
+                            "CABINA SIN CERTIFICADO" && (
+                            <p>
+                              Al cancelar el fee de la aerolínea, tu mascota
+                              puede viajar en cabina contigo.
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON CERTIFICADO" && (
+                            <p>
+                              Tu mascota califica al certificado de animal de
+                              apoyo emocional y podría viajar contigo sin costo
+                              adicional. Haz clic en el botón de WhatsApp para
+                              solicitarlo.
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON PERRO DE SERVICIO" && (
+                            <p>
+                              Tu perro podría ser un perro de servicio y podría
+                              viajar contigo en cabina sin costo adicional. Haz
+                              clic en el botón de WhatsApp para solicitarlo.
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON CERTIFICADO" && (
+                            <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON PERRO DE SERVICIO" && (
+                            <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                          )}
+
+                          {result.extras !== null && (
+                            <p>Consideraciones extras: {result.extras}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {bodegaResults.length > 0 && (
+                  <div className="viajes-bodega-container">
+                    <h3>Viajes en bodega con mascotas</h3>
+                    <div className="viajes-bodega-grid">
+                      {bodegaResults.map((result, index) => (
+                        <div key={index} className="viaje-bodega-item">
+                          <h4>{result.name.toUpperCase()}</h4>
+                          <p>
+                            Costo:{" "}
+                            {result.price === 0
+                              ? "GRATIS"
+                              : result.price === null
+                              ? "El precio varía según distintas condiciones"
+                              : `${result.price} ${result.currency}`}
+                          </p>
+                          {result.name.toUpperCase() === "BODEGA" && (
+                            <p>
+                              Al cancelar el fee de la aerolínea, tu mascota
+                              puede viajar en bodega.
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "BODEGA CON CERTIFICADO" && (
+                            <p>
+                              Tu mascota podría ser un animal de apoyo emocional
+                              y viajar en bodega sin gasto adicional.
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "BODEGA CON CERTIFICADO" && (
+                            <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                          )}
+                          {result.extras !== null && (
+                            <p>Consideraciones extras: {result.extras}</p>
+                          )}
+                        </div>
+                      ))}
+                      <div className="additional-info">
+                        <p>
+                          Trámites veterinarios:{" "}
+                          {apiData[0].description.replace("�", "ó")}
+                        </p>
+                        <p>
+                          Precio aproximado de los trámites:{" "}
+                          {apiData[0].comments.replace("�", "í")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Error />
+            )}
+          </div>
+        </div>
       )}
-    </div>
-  </div>
-)}
     </div>
   );
 }
 
 export default Formulario;
-
-
-
