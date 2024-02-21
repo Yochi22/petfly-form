@@ -79,12 +79,14 @@
 }
 
 .viaje-cabina-item {
- background-color: #007bff1c;
- border-radius: 05px;
+ background-color: #F1F4F9;
+ border-radius: 0px;
+ padding: 10px;
 }
 
 .viaje-bodega-item {
-  background-color: #007bff1c;
+  background-color: #F1F4F9;
+  padding: 10px;
  }
 /* Estilos para el contenido de cada elemento de resultado */
 .api-result-item-content {

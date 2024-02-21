@@ -370,7 +370,8 @@ function Formulario() {
                         Tu perro podría ser un perro de servicio y podría viajar contigo en cabina sin costo adicional. Haz clic en el botón de WhatsApp para solicitarlo.
                       </p>
                     )}
-                    <div className="button-container">
+                    {result.name.toUpperCase() === "CABINA CON CERTIFICADO" && (
+                      <div className="button-container">
                       <a
                         href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
                         target="_blank"
@@ -380,6 +381,20 @@ function Formulario() {
                         WhatsApp
                       </a>
                     </div>
+                    ) }
+                     {result.name.toUpperCase() === "CABINA CON PERRO DE SERVICIO" && (
+                      <div className="button-container">
+                      <a
+                        href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="whatsapp-button"
+                      >
+                        WhatsApp
+                      </a>
+                    </div>
+                    ) }
+                    
                     {result.extras !== null && (
                       <p>Consideraciones extras: {result.extras}</p>
                     )}
@@ -413,7 +428,8 @@ function Formulario() {
                         Tu mascota podría ser un animal de apoyo emocional y viajar en bodega sin gasto adicional.
                       </p>
                     )}
-                    <div className="button-container">
+                     {result.name.toUpperCase() === "BODEGA CON CERTIFICADO" && (
+                      <div className="button-container">
                       <a
                         href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
                         target="_blank"
@@ -423,6 +439,7 @@ function Formulario() {
                         WhatsApp
                       </a>
                     </div>
+                    ) }
                     {result.extras !== null && (
                       <p>Consideraciones extras: {result.extras}</p>
                     )}
