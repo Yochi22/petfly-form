@@ -8,6 +8,9 @@
   margin-top: -150px;
   margin-left: -122px;
 }
+.prueba {
+  margin-top: -70px;
+}
 
 .form-option {
   background-color: #f1f4f9;
@@ -40,7 +43,6 @@
 .resultados-container {
   background-color: #f1f4f9;
   padding: 20px;
-  border-radius: 10px;
   margin-top: 20px;
 }
 
@@ -48,14 +50,23 @@
   color: #0D3073 !important;
 }
 
+.additional-info {
+  background-color: #f1f4f9;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.additional-info p {
+  text-align: left;
+}
+
 .parrafo-additional-info {
   color: #0D3073 !important;
 }
 
-.title-results h4{
+.title-results h5{
   text-align: center;
   color: #0D3073;
-  background-color: #f1f4f9;
 }
 
 .title-results p{
@@ -91,13 +102,14 @@
 
 .viaje-cabina-item {
  background-color: #F1F4F9;
- border-radius: 0px;
+ border-radius: 20px;
  padding: 10px;
 }
 
 .viaje-bodega-item {
   background-color: #F1F4F9;
   padding: 10px;
+  border-radius: 20px;
  }
 /* Estilos para el contenido de cada elemento de resultado */
 .api-result-item-content {
@@ -132,6 +144,9 @@
   margin-top: 20px;
 }
 
+.aviso-tarifas {
+  margin-top: 30px;
+}
 /* Estilos para el botón */
 .whatsapp-button {
   background-color: #25d366;
@@ -208,5 +223,14 @@
   .viaje-bodega-item {
     flex-basis: calc(100% - 20px); /* Cada elemento ocupa el 100% del ancho del contenedor, con un espacio entre ellos */
     max-width: calc(100% - 20px); /* Ancho máximo para dispositivos móviles */
+  }
+}
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+  .container-results {
+    margin-top: -300px;
   }
 }

@@ -346,12 +346,12 @@ function Formulario() {
             {apiData.length > 0 ? (
               <>
                 <div className="title-results">
-                  <h4>
+                  <h5>
                       Basado en tus respuestas, encontrarás las siguientes
                       opciones de viaje, con sus respectivos costos para viajar
                       con tu mascota, así como también los trámites veterinarios
                       que debes realizar.
-                    </h4>
+                    </h5>
                     <p>Recuerda que puedes hacer otras consultas y editar tu información haciendo clic en atrás  (ejemplo: cambiando la aerolínea o el destino)
 </p>
                 </div>
@@ -473,14 +473,52 @@ function Formulario() {
                   </div>
                 )}
                 <div className="additional-info">
-                  <p>Trámites veterinarios: {apiData[0].description}</p>
+                  <h3 className="title-additional-info">Trámites veterinarios</h3>
+                  <p>{apiData[0].description}</p>
                   <p>
                     Precio aproximado de los trámites: {apiData[0].comments}
                   </p>
+                  <p>Solicita ayuda para realizar los tramites veterinarios para viajar con tu mascota. Haz clic en el boton de whatsapp para solicitarla.</p>
+                  <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20ayuda%20con%20los%20tr%C3%A1mites%20veterinarios%20para%20viajar%20con%20mi%20mascota"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
                 </div>
+                <div className="additional-info">
+                  <h3 className="title-additional-info">Viaje en cabina con certificado + Trámites Veterinarios</h3>
+                  <p>Solicita ayuda para realizar los tramites veterinarios y el certificado de animal de apoyo emocional o de perro de servicio para viajar con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlos.</p>
+                  <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20ayuda%20con%20los%20tr%C3%A1mites%20veterinarios%20y%20para%20solicitar%20un%20soliticar%20para%20viajar%20con%20mi%20mascota%20en%20cabina"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                </div>
+                <p className="aviso-tarifas">Las tarifas, condiciones y restricciones de las aerolíneas pueden cambiar, por lo cual recomendamos verificar la información con la aerolínea antes de tu viaje</p>
+              <div className="row contenedor-padre-flex">
+                <div className="col-md-6 d-flex justify-content-start">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handlePreviousStep}
+                  >
+                    Atrás
+                  </button>
+                </div>
+              </div>
               </>
             ) : (
-              <Error />
+              <Error onHandlePreviousStep={handlePreviousStep}/>
             )}
           </div>
         </div>

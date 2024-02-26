@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png"; 
 import "../../styles/SideMenu.css";
+import NavbarComponent from "./NavbarComponent";
 
 const SideMenu = ({ currentStep, stepNames, handleStepClick, showResults }) => {
 
@@ -13,9 +14,9 @@ const SideMenu = ({ currentStep, stepNames, handleStepClick, showResults }) => {
   return (
     <div className="side-menu">
       <div className="logo-container">
-        <img src={logo} alt="Logo" className="logo" />
-      </div>
       <h2>Conoce los costos y trámites para viajar con tu mascota</h2>
+      </div>
+
       <div className="progress-bar">
         {stepNames.map((name, index) => (
           <div
