@@ -251,3 +251,20 @@ label {
     margin-top: -300px;
   }
 }
+
+/*Terminos y condiciones*/
+.checkbox-terms {
+  margin-bottom: 20px;
+  margin-left: 3px;
+}
+
+#acceptTerms {
+  margin-right: 10px;
+}
+
+.acceptTerms{
+  color: #0D3073;
+  margin-left: 22px;
+  margin-top: -24px;
+}
+

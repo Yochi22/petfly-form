@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/Pasos.css"
+import "../../styles/Pasos.css";
 
 function Paso4({ formData, handleChange }) {
   return (
@@ -42,8 +42,21 @@ function Paso4({ formData, handleChange }) {
           required
         />
       </div>
+      <div className="checkbox-terms">
+        <input
+          type="checkbox"
+          id="acceptTerms"
+          name="acceptTerms"
+          required
+        />
+          <p className="acceptTerms">
+          Acepto los <a href="https://petfly.io/politica-privacidad/" target="_blank" rel="noopener noreferrer">términos y condiciones</a> y el <a href="https://petfly.io/politica-privacidad/" target="_blank" rel="noopener noreferrer">aviso de privacidad</a>
+          </p>
+      </div>
     </>
   );
 }
 
 export default Paso4;
+
+
