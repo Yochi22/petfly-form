@@ -496,7 +496,7 @@ function Formulario() {
                   <p>Solicita ayuda para realizar los tramites veterinarios y el certificado de animal de apoyo emocional o de perro de servicio para viajar con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlos.</p>
                   <div className="button-container">
                               <a
-                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20ayuda%20con%20los%20tr%C3%A1mites%20veterinarios%20y%20para%20solicitar%20un%20soliticar%20para%20viajar%20con%20mi%20mascota%20en%20cabina"
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20ayuda%20con%20los%20tr%C3%A1mites%20veterinarios%20y%20para%20solicitar%20un%20certificado%20para%20viajar%20con%20mi%20mascota%C2%A0en%C2%A0cabina"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="whatsapp-button"
