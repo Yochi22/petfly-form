@@ -20,7 +20,22 @@
   padding: 1rem;
   margin: 1rem 0 1rem 0;
   border-radius: 0.5rem;
+}
+
+label {
   font-weight: bold;
+}
+
+.title-section-veterinarios {
+  text-align: center;
+  margin-top: 90px;
+  color: #0D3073;
+}
+
+.title-section-aerolinea {
+  text-align: center;
+  color: #0D3073;
+  margin-bottom: 30px;
 }
 
 .contenedor-padre-flex {
@@ -54,6 +69,8 @@
   background-color: #f1f4f9;
   margin-top: 30px;
   text-align: center;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 .additional-info p {
@@ -65,12 +82,12 @@
 }
 
 .title-results h5{
-  text-align: center;
+  text-align: left;
   color: #0D3073;
 }
 
 .title-results p{
-  text-align: center;
+  text-align: left;
   color: #0D3073;
 }
 
@@ -184,6 +201,7 @@
       text-align: center;
       margin-top: 10px;
   }
+  
 }
 
 /* Estilos para los contenedores de resultados */

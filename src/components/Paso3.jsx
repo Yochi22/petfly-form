@@ -1,7 +1,35 @@
-import React from "react";
-import "../../styles/Pasos.css"
+import React, { useState } from "react";
+import "../../styles/Pasos.css";
 
 function Paso3({ formData, handleChange }) {
+  const [weight, setWeight] = useState(formData.weight || "");
+  const [maxLength, setMaxLength] = useState(formData.maxLength || "");
+  const [maxWidth, setMaxWidth] = useState(formData.maxWidth || "");
+  const [maxHeight, setMaxHeight] = useState(formData.maxHeight || "");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // Actualizar el estado interno según el nombre del campo
+    switch (name) {
+      case "weight":
+        setWeight(value);
+        break;
+      case "maxLength":
+        setMaxLength(value);
+        break;
+      case "maxWidth":
+        setMaxWidth(value);
+        break;
+      case "maxHeight":
+        setMaxHeight(value);
+        break;
+      default:
+        break;
+    }
+    // Actualizar el estado del formulario
+    handleChange(e);
+  };
+
   return (
     <>
       {/* Paso 3 */}
@@ -11,8 +39,8 @@ function Paso3({ formData, handleChange }) {
           type="number"
           className="form-control"
           name="weight"
-          value={formData.weight}
-          onChange={handleChange}
+          value={weight}
+          onChange={handleInputChange}
           placeholder="Ingresa el peso de tu mascota en Kg"
           required
         />
@@ -36,7 +64,9 @@ function Paso3({ formData, handleChange }) {
         </select>
       </div>
       <div className="form-group form-option">
-        <label>Dimensiones de la mascota (estos datos son opcionales pero colocarlos nos permitirá darte una asesoría más precisa)</label>
+        <label>Dimensiones de la mascota</label>
+        <p>(estos datos son opcionales pero colocarlos nos permitirá darte una asesoría más precisa)</p>
+        <br />
         <div className="row">
           <div className="col-md-4">
             <label htmlFor="maxLength">Longitud (centímetros)</label>
@@ -44,8 +74,8 @@ function Paso3({ formData, handleChange }) {
               type="number"
               className="form-control"
               name="maxLength"
-              value={formData.maxLength}
-              onChange={handleChange}
+              value={maxLength}
+              onChange={handleInputChange}
               placeholder="Ingresa la dimensión en centímetros"
             />
           </div>
@@ -55,8 +85,8 @@ function Paso3({ formData, handleChange }) {
               type="number"
               className="form-control"
               name="maxWidth"
-              value={formData.maxWidth}
-              onChange={handleChange}
+              value={maxWidth}
+              onChange={handleInputChange}
               placeholder="Ingresa la dimensión en centímetros"
             />
           </div>
@@ -67,14 +97,18 @@ function Paso3({ formData, handleChange }) {
               className="form-control"
               name="maxHeight"
               placeholder="Ingresa la dimensión en centímetros"
-              value={formData.maxHeight}
-              onChange={handleChange}
+              value={maxHeight}
+              onChange={handleInputChange}
             />
           </div>
         </div>
+        <br />
+        <a href="https://traveldog.es/como-medir-a-tu-mascota/" target="_blank">Aprende cómo medir a tu mascota en el siguiente link</a>
       </div>
     </>
   );
 }
 
 export default Paso3;
+
+

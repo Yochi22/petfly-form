@@ -39,7 +39,7 @@ function Formulario() {
     "País de destino y aerolínea",
     "Tipo y raza de mascota",
     "Edad, peso y dimensiones",
-    "Resultados",
+    "Resultados"
   ];
 
   const handleChange = (e) => {
@@ -268,9 +268,6 @@ function Formulario() {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-8 prueba">
-          {isMobile && step < 4 && (
-            <h2>Conoce los costos y trámites para viajar con tu mascota</h2>
-          )}
           {!isMobile && (
             <div className="col-md-3">
               <SideMenu
@@ -332,7 +329,7 @@ function Formulario() {
                     className="btn btn-primary"
                     onClick={handleSubmit}
                   >
-                    Costos y trámites
+                    Ver costos y trámites
                   </button>
                 )}
               </div>
@@ -342,6 +339,7 @@ function Formulario() {
       </div>
       {showResults && step > 4 && (
         <div className="container container-results">
+          <h3 className="title-section-aerolinea">Este es el costo de la <b>aerolínea</b> para viajar con tu mascota</h3>
           <div className="row justify-content-center">
             {apiData.length > 0 ? (
               <>
@@ -357,7 +355,7 @@ function Formulario() {
                 </div>
                 {cabinaResults.length > 0 && (
                   <div className="viajes-cabina-container">
-                    <h3>Viajes en cabina</h3>
+                    <h3>Viaje en cabina</h3>
                     <div className="viajes-cabina-grid">
                       {cabinaResults.map((result, index) => (
                         <div key={index} className="viaje-cabina-item">
@@ -376,6 +374,10 @@ function Formulario() {
                               Al cancelar el fee de la aerolínea, tu mascota
                               puede viajar en cabina contigo.
                             </p>
+                            
+                          )}
+                          {result.extras !== null && (
+                            <p>Consideraciones extras: {result.extras}</p>
                           )}
                           {result.name.toUpperCase() ===
                             "CABINA CON CERTIFICADO" && (
@@ -402,6 +404,7 @@ function Formulario() {
                               </a>
                             </div>
                           )}
+
                           {result.name.toUpperCase() ===
                             "CABINA CON PERRO DE SERVICIO" && (
                             <div className="button-container">
@@ -414,10 +417,6 @@ function Formulario() {
                                 WhatsApp
                               </a>
                             </div>
-                          )}
-
-                          {result.extras !== null && (
-                            <p>Consideraciones extras: {result.extras}</p>
                           )}
                         </div>
                       ))}
@@ -445,6 +444,9 @@ function Formulario() {
                               puede viajar en bodega.
                             </p>
                           )}
+                          {result.extras !== null && (
+                            <p>Consideraciones extras: {result.extras}</p>
+                          )}
                           {result.name.toUpperCase() ===
                             "BODEGA CON CERTIFICADO" && (
                             <p>
@@ -464,14 +466,13 @@ function Formulario() {
                               </a>
                             </div>
                           )}
-                          {result.extras !== null && (
-                            <p>Consideraciones extras: {result.extras}</p>
-                          )}
+                          
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
+                <h3 className="title-section-veterinarios">Estos son los <b>trámites veterinarios</b> para viajar con tu mascota</h3>
                 <div className="additional-info">
                   <h3 className="title-additional-info">Trámites veterinarios</h3>
                   <p>{apiData[0].description}</p>
