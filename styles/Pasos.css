@@ -6,14 +6,14 @@
 .form-control {
     color: #0D3073;
 }
-/* Estilos para los inputs y selects */
+
 .form-control {
     width: 100%;
     padding: 0.5em;
     border: 1px solid #ccc;
     background-color: #fff;
     cursor: pointer;
-    box-sizing: border-box; /* Asegurar que el padding no afecte al ancho */
+    box-sizing: border-box; 
   }
 
   .title-step4 p
@@ -22,10 +22,10 @@
     padding: 3px;
   }
   
-  /* Media query para dispositivos móviles */
+  
   @media (max-width: 768px) {
     .form-control {
-      margin-bottom: 10px; /* Agregar espacio entre los elementos */
+      margin-bottom: 10px; 
     }
   }
   .tooltip-container {
@@ -42,9 +42,9 @@
   }
   
   .tooltip-content {
-    display: none; /* Por defecto, oculto */
+    display: none; 
     position: absolute;
-    top: calc(100% + 10px); /* Alinea el tooltip debajo del trigger */
+    top: calc(100% + 10px); 
     left: 50%;
     transform: translateX(-50%);
     background-color:  #f1f4f9;
@@ -58,12 +58,11 @@
   }
   
   .tooltip-trigger:hover + .tooltip-content {
-    display: block; /* Muestra el tooltip al pasar el mouse sobre el trigger */
-  }
+    display: block; }
   
   @media (min-width: 768px) {
     .tooltip-content {
-      width: 80vw; /* Ancho máximo en dispositivos móviles */
+      width: 80vw; 
     }
   }
 

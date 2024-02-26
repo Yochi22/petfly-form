@@ -9,7 +9,7 @@ function Paso3({ formData, handleChange }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Actualizar el estado interno según el nombre del campo
+  
     switch (name) {
       case "weight":
         setWeight(value);

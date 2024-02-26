@@ -19,7 +19,7 @@ function InfoRazaModal({ show, handleClose }) {
         <ul>
           <li>Burmese Americano, Himalayo, Persa, Shorthair Exótico, Silver(nuevo)</li>
         </ul>
-        <h4>Peligrosas:razas consideradas como peligrosas por las aerolíneas.</h4>
+        <h4>Peligrosas: razas consideradas como peligrosas por las aerolíneas.</h4>
         <p>Perros peligrosos incluyen las siguientes razas:</p>
         <ul>
           <li>Akita In, American Bully (Nuevo), Boxer, Bulldog Americano, Bull Terrier, Bullmastiff, Dogo Argentino, Dogo de Burdeos, Fila Brasilero, Karabash, Mastín Napolitano, Pitbull Terrier Americano, Presa Canario, Rottweiler, Staffordshire Bull Terrier Ingles (Staffi), Staffordshire Terrier Americano (Amstaff), Tosa Japonés.</li>

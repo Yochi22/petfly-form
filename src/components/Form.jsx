@@ -339,7 +339,6 @@ function Formulario() {
       </div>
       {showResults && step > 4 && (
         <div className="container container-results">
-          <h3 className="title-section-aerolinea">Este es el costo de la <b>aerolínea</b> para viajar con tu mascota</h3>
           <div className="row justify-content-center">
             {apiData.length > 0 ? (
               <>
@@ -353,6 +352,7 @@ function Formulario() {
                     <p>Recuerda que puedes hacer otras consultas y editar tu información haciendo clic en atrás  (ejemplo: cambiando la aerolínea o el destino)
 </p>
                 </div>
+                <h3 className="title-section-aerolinea">Este es el costo de la <b>aerolínea</b> para viajar con tu mascota</h3>
                 {cabinaResults.length > 0 && (
                   <div className="viajes-cabina-container">
                     <h3>Viaje en cabina</h3>

@@ -35,7 +35,8 @@ label {
 .title-section-aerolinea {
   text-align: center;
   color: #0D3073;
-  margin-bottom: 30px;
+  margin-top: 40px;
+  margin-bottom: 18px;
 }
 
 .contenedor-padre-flex {
@@ -128,7 +129,7 @@ label {
   padding: 10px;
   border-radius: 20px;
  }
-/* Estilos para el contenido de cada elemento de resultado */
+
 .api-result-item-content {
   background-color: #f1f4f9;
   border-radius: 10px;
@@ -136,25 +137,23 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centrar elementos horizontalmente */
-  padding: 20px; /* Añadir un poco de espacio interno */
+  align-items: center; 
+  padding: 20px; 
 }
 
-/* Estilos para los títulos dentro de cada elemento de resultado */
 .api-result-item-content h4 {
   text-align: center;
   color: #0D3073;
   margin: 0;
 }
 
-/* Estilos para los párrafos dentro de cada elemento de resultado */
+
 .api-result-item-content p {
   text-align: center;
   color: #0D3073;
   margin: 0;
 }
 
-/* Estilos para el contenedor de botón */
 .button-container {
   display: flex;
   justify-content: center;
@@ -164,7 +163,7 @@ label {
 .aviso-tarifas {
   margin-top: 30px;
 }
-/* Estilos para el botón */
+
 .whatsapp-button {
   background-color: #25d366;
   color: #fff;
@@ -175,26 +174,26 @@ label {
   transition: background-color 0.3s ease;
 }
 
-/* Estilos para el botón al pasar el ratón sobre él */
+
 .whatsapp-button:hover {
   background-color: #128c7e;
 }
 
-/* Estilos para dispositivos móviles */
+
 @media (max-width: 768px) {
-  /* Cambiar la dirección de los resultados a columna en dispositivos móviles */
+  
   .api-result {
       flex-direction: column;
       margin-top: -200px;
   }
 
-  /* Ajustar estilos del botón en dispositivos móviles */
+  
   .button-container {
       flex-direction: column;
       align-items: center;
   }
 
-  /* Ajustar estilos del botón en dispositivos móviles */
+  
   .whatsapp-button {
       display: block;
       margin: 0 auto;
@@ -204,43 +203,43 @@ label {
   
 }
 
-/* Estilos para los contenedores de resultados */
+
 .viajes-cabina-container,
 .viajes-bodega-container {
   width: 100%;
   margin-top: 20px;
-  text-align: center; /* Centrar el texto */
+  text-align: center; 
 }
 
-/* Estilos para los elementos individuales de resultado */
+
 .viajes-cabina-grid,
 .viajes-bodega-grid {
   display: flex;
-  flex-wrap: wrap; /* Permitir que los elementos se envuelvan a la siguiente línea */
-  justify-content: center; /* Centrar los elementos horizontalmente */
-  margin-top: 20px; /* Espacio entre los contenedores de resultados */
+  flex-wrap: wrap; 
+  justify-content: center; 
+  margin-top: 20px; 
 }
 
-/* Estilos para los elementos individuales de resultado */
+
 .viaje-cabina-item,
 .viaje-bodega-item {
-  flex: 0 0 calc(33.33% - 20px); /* Cada elemento ocupa inicialmente el 33.33% del ancho del contenedor, con un espacio entre ellos */
-  max-width: calc(33.33% - 20px); /* Ancho máximo para asegurar que cada elemento tenga el mismo tamaño */
-  margin: 10px; /* Espacio entre elementos */
+  flex: 0 0 calc(33.33% - 20px); 
+  max-width: calc(33.33% - 20px); 
+  margin: 10px; 
 }
 
-/* Estilos para dispositivos móviles */
+
 @media (max-width: 768px) {
   /* ESTO LO ESTOY PROBANDO FALTA VER COMO SE VE CUANDO CAMBIEN LOS TITULOS */
 .container-results{
   margin-top: -230px;
   margin-left: 0px;
 }
-  /* Cambiar el ancho de los elementos individuales para que se muestren uno debajo del otro */
+  
   .viaje-cabina-item,
   .viaje-bodega-item {
-    flex-basis: calc(100% - 20px); /* Cada elemento ocupa el 100% del ancho del contenedor, con un espacio entre ellos */
-    max-width: calc(100% - 20px); /* Ancho máximo para dispositivos móviles */
+    flex-basis: calc(100% - 20px); 
+    max-width: calc(100% - 20px); 
   }
 }
 
