@@ -15,7 +15,7 @@ const SideMenu = ({ currentStep, stepNames, handleStepClick, showResults }) => {
       <div className="logo-container">
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>Viaja con tu mascota</h2>
+      <h2>Conoce los costos y trámites para viajar con tu mascota</h2>
       <div className="progress-bar">
         {stepNames.map((name, index) => (
           <div

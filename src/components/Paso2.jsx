@@ -27,9 +27,9 @@ function Paso2({ formData, handleChange }) {
           onChange={handleChange}
         >
           <option value="">Selecciona la raza de tu mascota</option>
-          <option value="Brachycephalic">Braquicéfalo</option>
-          <option value="Hazardous">Peligroso</option>
           <option value="General">General</option>
+          <option value="Brachycephalic">Braquicéfala</option>
+          <option value="Hazardous">Peligrosa</option> 
         </select>
       </div>
     </>

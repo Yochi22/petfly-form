@@ -52,7 +52,13 @@
   color: #0D3073 !important;
 }
 
-.title-results h2{
+.title-results h4{
+  text-align: center;
+  color: #0D3073;
+  background-color: #f1f4f9;
+}
+
+.title-results p{
   text-align: center;
   color: #0D3073;
 }

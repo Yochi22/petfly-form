@@ -44,9 +44,9 @@ function Formulario() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     let cleanedValue = value;
-  
+
     if (name === "phone") {
       // Eliminar espacios en blanco
       cleanedValue = value.replace(/\s+/g, "");
@@ -56,7 +56,7 @@ function Formulario() {
         cleanedValue = `57${cleanedValue}`;
       }
     }
-  
+
     const newValue = ["weight", "maxLength", "maxWidth", "maxHeight"].includes(
       name
     )
@@ -64,10 +64,10 @@ function Formulario() {
       : name === "age"
       ? parseInt(cleanedValue, 10)
       : cleanedValue;
-  
+
     const countryGroupId =
       name === "countryGroup" ? parseInt(cleanedValue, 10) : cleanedValue;
-  
+
     setFormData({ ...formData, [name]: newValue });
   };
 
@@ -268,7 +268,9 @@ function Formulario() {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-8 prueba">
-          {isMobile && step < 5 && <h2>Viaja con tu mascota</h2>}
+          {isMobile && step < 4 && (
+            <h2>Conoce los costos y trámites para viajar con tu mascota</h2>
+          )}
           {!isMobile && (
             <div className="col-md-3">
               <SideMenu
@@ -330,7 +332,7 @@ function Formulario() {
                     className="btn btn-primary"
                     onClick={handleSubmit}
                   >
-                    Conocer resultados
+                    Costos y trámites
                   </button>
                 )}
               </div>
@@ -344,11 +346,18 @@ function Formulario() {
             {apiData.length > 0 ? (
               <>
                 <div className="title-results">
-                  <h2>Costo de la aerolínea para tu mascota</h2>
+                  <h4>
+                      Basado en tus respuestas, encontrarás las siguientes
+                      opciones de viaje, con sus respectivos costos para viajar
+                      con tu mascota, así como también los trámites veterinarios
+                      que debes realizar.
+                    </h4>
+                    <p>Recuerda que puedes hacer otras consultas y editar tu información haciendo clic en atrás  (ejemplo: cambiando la aerolínea o el destino)
+</p>
                 </div>
                 {cabinaResults.length > 0 && (
                   <div className="viajes-cabina-container">
-                    <h3>Viaje en cabina con tu mascota</h3>
+                    <h3>Viajes en cabina</h3>
                     <div className="viajes-cabina-grid">
                       {cabinaResults.map((result, index) => (
                         <div key={index} className="viaje-cabina-item">
@@ -371,25 +380,20 @@ function Formulario() {
                           {result.name.toUpperCase() ===
                             "CABINA CON CERTIFICADO" && (
                             <p>
-                              Tu mascota califica al certificado de animal de
-                              apoyo emocional y podría viajar contigo sin costo
-                              adicional. Haz clic en el botón de WhatsApp para
-                              solicitarlo.
+                              Solicita tu certificado de animal de apoyo emocional y viaja con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
                             </p>
                           )}
                           {result.name.toUpperCase() ===
                             "CABINA CON PERRO DE SERVICIO" && (
                             <p>
-                              Tu perro podría ser un perro de servicio y podría
-                              viajar contigo en cabina sin costo adicional. Haz
-                              clic en el botón de WhatsApp para solicitarlo.
+                              Solicita tu certificado de perro de servicio y viaja con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
                             </p>
                           )}
                           {result.name.toUpperCase() ===
                             "CABINA CON CERTIFICADO" && (
                             <div className="button-container">
                               <a
-                                href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20cabina."
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="whatsapp-button"
@@ -402,7 +406,7 @@ function Formulario() {
                             "CABINA CON PERRO DE SERVICIO" && (
                             <div className="button-container">
                               <a
-                                href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20cabina."
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="whatsapp-button"
@@ -444,15 +448,14 @@ function Formulario() {
                           {result.name.toUpperCase() ===
                             "BODEGA CON CERTIFICADO" && (
                             <p>
-                              Tu mascota podría ser un animal de apoyo emocional
-                              y viajar en bodega sin gasto adicional.
+                              Solicita tu certificado de animal de apoyo emocional y lleva tu mascota en bodega sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
                             </p>
                           )}
                           {result.name.toUpperCase() ===
                             "BODEGA CON CERTIFICADO" && (
                             <div className="button-container">
                               <a
-                                href="https://api.whatsapp.com/send?phone=TUNUMERODEWHATSAPP"
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20bodega."
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="whatsapp-button"
@@ -469,16 +472,12 @@ function Formulario() {
                     </div>
                   </div>
                 )}
-                 <div className="additional-info">
-                        <p>
-                          Trámites veterinarios:{" "}
-                          {apiData[0].description}
-                        </p>
-                        <p>
-                          Precio aproximado de los trámites:{" "}
-                          {apiData[0].comments}
-                        </p>
-                      </div>
+                <div className="additional-info">
+                  <p>Trámites veterinarios: {apiData[0].description}</p>
+                  <p>
+                    Precio aproximado de los trámites: {apiData[0].comments}
+                  </p>
+                </div>
               </>
             ) : (
               <Error />

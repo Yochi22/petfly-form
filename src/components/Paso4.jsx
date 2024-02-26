@@ -5,8 +5,11 @@ function Paso4({ formData, handleChange }) {
   return (
     <>
       {/* Paso 4 */}
+      <div className="title-step4">
+        <p>Para conocer los costos y trámites para viajar con tu mascota, completa la información a continuación:</p>
+      </div>
       <div className="form-group form-option">
-        <label htmlFor="name">Nombre</label>
+        <label htmlFor="name">Nombre y Apellidos del pasajero</label>
         <input
           type="text"
           className="form-control"
@@ -28,7 +31,7 @@ function Paso4({ formData, handleChange }) {
         />
       </div>
       <div className="form-group form-option">
-        <label htmlFor="phone">Teléfono</label>
+        <label htmlFor="phone">Celular</label>
         <input
           type="tel"
           className="form-control"
