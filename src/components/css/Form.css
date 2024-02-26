@@ -1,30 +1,270 @@
 .container {
-    /* border: 2px solid red !important; */
-    position: relative;
-    width: auto;
-    padding: 14vh 0 12vh 15vw;
+  position: relative;
+  width: auto;
+  padding: 14vh 0 12vh 15vw;
+}
+/* ESTO LO ESTOY PROBANDO FALTA VER COMO SE VE CUANDO CAMBIEN LOS TITULOS */
+.container-results{
+  margin-top: -150px;
+  margin-left: -122px;
+}
+.prueba {
+  margin-top: -70px;
 }
 
 .form-option {
-    background-color: #f1f4f9;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 1rem;
-    margin: 1rem 0 1rem 0;
-    border-radius: 0.5rem;
-    font-weight: bold;
+  background-color: #f1f4f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem;
+  margin: 1rem 0 1rem 0;
+  border-radius: 0.5rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+.title-section-veterinarios {
+  text-align: center;
+  margin-top: 90px;
+  color: #0D3073;
+}
+
+.title-section-aerolinea {
+  text-align: center;
+  color: #0D3073;
+  margin-top: 40px;
+  margin-bottom: 18px;
 }
 
 .contenedor-padre-flex {
-    display: inline-block;
-    margin: 0 2vw 0 2vw;
-    display: flex;
-    justify-content: space-between;
+  display: inline-block;
+  margin: 0 2vw 0 2vw;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 18vh 3vw 0 3vw;
-    }
+  .container {
+      padding: 18vh 3vw 0 3vw;
+  }
 }
+
+.prueba h2 {
+  color: #0D3073;
+}
+
+.resultados-container {
+  background-color: #f1f4f9;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.title-additional-info {
+  color: #0D3073 !important;
+}
+
+.additional-info {
+  background-color: #f1f4f9;
+  margin-top: 30px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.additional-info p {
+  text-align: left;
+}
+
+.parrafo-additional-info {
+  color: #0D3073 !important;
+}
+
+.title-results h5{
+  text-align: left;
+  color: #0D3073;
+}
+
+.title-results p{
+  text-align: left;
+  color: #0D3073;
+}
+
+.viajes-cabina-container h3 {
+  text-align: center;
+  color: #0D3073;
+}
+
+.viajes-bodega-container {
+  text-align: center;
+  color: #0D3073;
+}
+
+.viaje-bodega-item p{
+  color: #0D3073;
+}
+
+.viaje-cabina-item p{
+  color: #0D3073;
+}
+
+.viaje-bodega-item h4{
+  color: #0D3073;
+}
+
+.viaje-cabina-item h4{
+  color: #0D3073;
+}
+
+.viaje-cabina-item {
+ background-color: #F1F4F9;
+ border-radius: 20px;
+ padding: 10px;
+}
+
+.viaje-bodega-item {
+  background-color: #F1F4F9;
+  padding: 10px;
+  border-radius: 20px;
+ }
+
+.api-result-item-content {
+  background-color: #f1f4f9;
+  border-radius: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  padding: 20px; 
+}
+
+.api-result-item-content h4 {
+  text-align: center;
+  color: #0D3073;
+  margin: 0;
+}
+
+
+.api-result-item-content p {
+  text-align: center;
+  color: #0D3073;
+  margin: 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.aviso-tarifas {
+  margin-top: 30px;
+}
+
+.whatsapp-button {
+  background-color: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+
+.whatsapp-button:hover {
+  background-color: #128c7e;
+}
+
+
+@media (max-width: 768px) {
+  
+  .api-result {
+      flex-direction: column;
+      margin-top: -200px;
+  }
+
+  
+  .button-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  
+  .whatsapp-button {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 10px;
+  }
+  
+}
+
+
+.viajes-cabina-container,
+.viajes-bodega-container {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center; 
+}
+
+
+.viajes-cabina-grid,
+.viajes-bodega-grid {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  margin-top: 20px; 
+}
+
+
+.viaje-cabina-item,
+.viaje-bodega-item {
+  flex: 0 0 calc(33.33% - 20px); 
+  max-width: calc(33.33% - 20px); 
+  margin: 10px; 
+}
+
+
+@media (max-width: 768px) {
+  /* ESTO LO ESTOY PROBANDO FALTA VER COMO SE VE CUANDO CAMBIEN LOS TITULOS */
+.container-results{
+  margin-top: -230px;
+  margin-left: 0px;
+}
+  
+  .viaje-cabina-item,
+  .viaje-bodega-item {
+    flex-basis: calc(100% - 20px); 
+    max-width: calc(100% - 20px); 
+  }
+}
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+  .container-results {
+    margin-top: -300px;
+  }
+}
+
+/*Terminos y condiciones*/
+.checkbox-terms {
+  margin-bottom: 20px;
+  margin-left: 3px;
+}
+
+#acceptTerms {
+  margin-right: 10px;
+}
+
+.acceptTerms{
+  color: #0D3073;
+  margin-left: 22px;
+  margin-top: -24px;
+}
+

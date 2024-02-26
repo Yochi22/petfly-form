@@ -4,9 +4,9 @@ import Paso2 from "./Paso2";
 import Paso3 from "./Paso3";
 import Paso4 from "./Paso4";
 import Error from "./Error";
-import SideMenu from "./SideMenu"
-import './css/Form.css'
-import { useMediaQuery } from 'react-responsive';
+import SideMenu from "./SideMenu";
+import "./css/Form.css";
+import { useMediaQuery } from "react-responsive";
 
 function Formulario() {
   const [formData, setFormData] = useState({
@@ -24,19 +24,21 @@ function Formulario() {
     phone: "",
   });
 
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
   const [countries, setCountries] = useState([]);
   const [airlinesData, setAirlinesData] = useState([]);
   const [countryGroupsData, setCountryGroupsData] = useState([]);
   const [apiData, setApiData] = useState([]);
-  const [showResults, setShowResults] = useState(false); 
+  const [showResults, setShowResults] = useState(false);
+
+  const [cabinaResults, setCabinaResults] = useState([]);
+  const [bodegaResults, setBodegaResults] = useState([]);
 
   const [step, setStep] = useState(1);
   const stepNames = [
-    "País y destino y aerolínea",
+    "País de destino y aerolínea",
     "Tipo y raza de mascota",
     "Edad, peso y dimensiones",
-    "Datos básicos",
     "Resultados"
   ];
 
@@ -46,15 +48,22 @@ function Formulario() {
     let cleanedValue = value;
 
     if (name === "phone") {
+      // Eliminar espacios en blanco
       cleanedValue = value.replace(/\s+/g, "");
+      // Verificar si el número de teléfono no comienza con "57" ni con '+'
+      if (!cleanedValue.startsWith("57") && !cleanedValue.startsWith("+")) {
+        // Si no comienza con "57" ni '+', agregamos '57' al principio
+        cleanedValue = `57${cleanedValue}`;
+      }
     }
 
-    const newValue =
-      ["weight", "maxLength", "maxWidth", "maxHeight"].includes(name)
-        ? parseFloat(cleanedValue === "" ? 0 : cleanedValue)
-        : name === "age"
-        ? parseInt(cleanedValue, 10)
-        : cleanedValue;
+    const newValue = ["weight", "maxLength", "maxWidth", "maxHeight"].includes(
+      name
+    )
+      ? parseFloat(cleanedValue === "" ? 0 : cleanedValue)
+      : name === "age"
+      ? parseInt(cleanedValue, 10)
+      : cleanedValue;
 
     const countryGroupId =
       name === "countryGroup" ? parseInt(cleanedValue, 10) : cleanedValue;
@@ -77,7 +86,12 @@ function Formulario() {
 
     switch (step) {
       case 1:
-        if (!countryGroup || !airline || countryGroup === "" || airline === "") {
+        if (
+          !countryGroup ||
+          !airline ||
+          countryGroup === "" ||
+          airline === ""
+        ) {
           setError("Por favor, completa todos los campos.");
           return false;
         }
@@ -169,8 +183,8 @@ function Formulario() {
 
         if (consultaResponse.ok) {
           const data = await consultaResponse.json();
-          setApiData(data); 
-          setShowResults(true)
+          setApiData(data);
+          handleShowResults(data); // Pasamos los nuevos datos como argumento
           setStep(5);
         } else {
           console.error(
@@ -200,7 +214,6 @@ function Formulario() {
     setStep(stepNumber);
   };
 
-
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -209,7 +222,7 @@ function Formulario() {
         );
         if (response.ok) {
           const data = await response.json();
-          setCountryGroupsData(data); 
+          setCountryGroupsData(data);
         } else {
           console.error("Error al obtener los países.");
         }
@@ -238,128 +251,281 @@ function Formulario() {
     fetchAirlines();
   }, []);
 
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const handleShowResults = (newData) => {
+    setShowResults(true);
+    const cabina = newData.filter((result) =>
+      result.name.toUpperCase().includes("CABINA")
+    );
+    const bodega = newData.filter((result) =>
+      result.name.toUpperCase().includes("BODEGA")
+    );
+    setCabinaResults(cabina);
+    setBodegaResults(bodega);
+  };
+
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   return (
     <div className="container">
-    <div className="row justify-content-center">
-    <div className="col-md-8 prueba">
-          {/* Renderización condicional del SideMenu */}
+      <div className="row justify-content-center">
+        <div className="col-md-8 prueba">
           {!isMobile && (
             <div className="col-md-3">
-              <SideMenu currentStep={step} stepNames={stepNames} handleStepClick={handleStepClick} showResults={showResults}/>
+              <SideMenu
+                currentStep={step}
+                stepNames={stepNames}
+                handleStepClick={handleStepClick}
+                showResults={showResults}
+              />
             </div>
           )}
-        <form>
-          {/* Renderización condicional de los pasos del formulario */}
-          {step === 1 && (
-            <Paso1
-              formData={formData}
-              handleChange={handleChange}
-              countryGroupsData={countryGroupsData}
-              airlinesData={airlinesData}
-            />
-          )}
-          {step === 2 && (
-            <Paso2
-              formData={formData}
-              handleChange={handleChange}
-            />
-          )}
-          {step === 3 && (
-            <Paso3
-              formData={formData}
-              handleChange={handleChange}
-            />
-          )}
-          {step === 4 && (
-            <Paso4
-              formData={formData}
-              handleChange={handleChange}
-            />
-          )}
-          {/* Botones de navegación */}
-          <div className="text-danger">{error}</div>
-          
-          <div className="row contenedor-padre-flex">
-            {step > 1 && step < 5 && (
-              <div className="col-md-6 d-flex justify-content-start">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handlePreviousStep}
-                >
-                  Atrás
-                </button>
-              </div>
+          <form>
+            {/* Renderización condicional de los pasos del formulario */}
+            {step === 1 && (
+              <Paso1
+                formData={formData}
+                handleChange={handleChange}
+                countryGroupsData={countryGroupsData}
+                airlinesData={airlinesData}
+              />
             )}
-            <div className="col-md-6 d-flex justify-content-end ">
-              {step < 4 && (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleNextStep}
-                >
-                  Siguiente
-                </button>
-              )}
+            {step === 2 && (
+              <Paso2 formData={formData} handleChange={handleChange} />
+            )}
+            {step === 3 && (
+              <Paso3 formData={formData} handleChange={handleChange} />
+            )}
+            {step === 4 && (
+              <Paso4 formData={formData} handleChange={handleChange} />
+            )}
+            {/* Botones de navegación */}
+            <div className="text-danger">{error}</div>
 
-              {step === 4 && (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSubmit}
-                >
-                  Conocer resultados
-                </button>
-              )}
-          </div>
-              
-              
-            </div>
-          
-        </form>
-      </div>
-    </div>
-    {showResults && step > 4 && (
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-8">
-            {/* Mostrar el título solo si hay resultados */}
-            {apiData.length > 0 && (
-              <h2>Resultados de la consulta</h2>
-            )}
-            {apiData.length > 0 ? (
-              <>
-                {apiData.map((result, index) => (
-                  <div key={index} className="api-result">
-                    <h3>{result.name}</h3>
-                    <p>
-                      Costo: {result.price === 0 ? "GRATIS" : result.price === null ? "El precio varía según distintas condiciones" : `${result.price} ${result.currency}`}
-                    </p>
-                    {result.extras !== null && (
-                      <p>Consideraciones extras: {result.extras}</p>
-                    )}
-                  </div>
-                ))}
-                <div className="additional-info">
-                  <p>Trámites veterinarios: {apiData[0].description}</p>
-                  <p>Precio aproximado de los trámites: {apiData[0].comments}</p>
+            <div className="row contenedor-padre-flex">
+              {step > 1 && step < 5 && (
+                <div className="col-md-6 d-flex justify-content-start">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handlePreviousStep}
+                  >
+                    Atrás
+                  </button>
                 </div>
-              </>
-            ) : (
-              <Error />
-            )} 
-          </div>
+              )}
+              <div className="col-md-6 d-flex justify-content-end ">
+                {step < 4 && (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleNextStep}
+                  >
+                    Siguiente
+                  </button>
+                )}
+
+                {step === 4 && (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
+                    Ver costos y trámites
+                  </button>
+                )}
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    )}
-  </div>
-);
- }  
+      {showResults && step > 4 && (
+        <div className="container container-results">
+          <div className="row justify-content-center">
+            {apiData.length > 0 ? (
+              <>
+                <div className="title-results">
+                  <h5>
+                      Basado en tus respuestas, encontrarás las siguientes
+                      opciones de viaje, con sus respectivos costos para viajar
+                      con tu mascota, así como también los trámites veterinarios
+                      que debes realizar.
+                    </h5>
+                    <p>Recuerda que puedes hacer otras consultas y editar tu información haciendo clic en atrás  (ejemplo: cambiando la aerolínea o el destino)
+</p>
+                </div>
+                <h3 className="title-section-aerolinea">Este es el costo de la <b>aerolínea</b> para viajar con tu mascota</h3>
+                {cabinaResults.length > 0 && (
+                  <div className="viajes-cabina-container">
+                    <h3>Viaje en cabina</h3>
+                    <div className="viajes-cabina-grid">
+                      {cabinaResults.map((result, index) => (
+                        <div key={index} className="viaje-cabina-item">
+                          <h4>{result.name.toUpperCase()}</h4>
+                          <p>
+                            Costo:{" "}
+                            {result.price === 0
+                              ? "GRATIS"
+                              : result.price === null
+                              ? "El precio varía según distintas condiciones"
+                              : `${result.price} ${result.currency}`}
+                          </p>
+                          {result.name.toUpperCase() ===
+                            "CABINA SIN CERTIFICADO" && (
+                            <p>
+                              Al cancelar el fee de la aerolínea, tu mascota
+                              puede viajar en cabina contigo.
+                            </p>
+                            
+                          )}
+                          {result.extras !== null && (
+                            <p>Consideraciones extras: {result.extras}</p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON CERTIFICADO" && (
+                            <p>
+                              Solicita tu certificado de animal de apoyo emocional y viaja con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON PERRO DE SERVICIO" && (
+                            <p>
+                              Solicita tu certificado de perro de servicio y viaja con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "CABINA CON CERTIFICADO" && (
+                            <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20cabina."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                          )}
+
+                          {result.name.toUpperCase() ===
+                            "CABINA CON PERRO DE SERVICIO" && (
+                            <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20cabina."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {bodegaResults.length > 0 && (
+                  <div className="viajes-bodega-container">
+                    <h3>Viaje en bodega</h3>
+                    <div className="viajes-bodega-grid">
+                      {bodegaResults.map((result, index) => (
+                        <div key={index} className="viaje-bodega-item">
+                          <h4>{result.name.toUpperCase()}</h4>
+                          <p>
+                            Costo:{" "}
+                            {result.price === 0
+                              ? "GRATIS"
+                              : result.price === null
+                              ? "El precio varía según distintas condiciones"
+                              : `${result.price} ${result.currency}`}
+                          </p>
+                          {result.name.toUpperCase() === "BODEGA" && (
+                            <p>
+                              Al cancelar el fee de la aerolínea, tu mascota
+                              puede viajar en bodega.
+                            </p>
+                          )}
+                          {result.extras !== null && (
+                            <p>Consideraciones extras: {result.extras}</p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "BODEGA CON CERTIFICADO" && (
+                            <p>
+                              Solicita tu certificado de animal de apoyo emocional y lleva tu mascota en bodega sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
+                            </p>
+                          )}
+                          {result.name.toUpperCase() ===
+                            "BODEGA CON CERTIFICADO" && (
+                            <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20bodega."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                          )}
+                          
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <h3 className="title-section-veterinarios">Estos son los <b>trámites veterinarios</b> para viajar con tu mascota</h3>
+                <div className="additional-info">
+                  <h3 className="title-additional-info">Trámites veterinarios</h3>
+                  <p>{apiData[0].description}</p>
+                  <p>
+                    Precio aproximado de los trámites: {apiData[0].comments}
+                  </p>
+                  <p>Solicita ayuda para realizar los tramites veterinarios para viajar con tu mascota. Haz clic en el boton de whatsapp para solicitarla.</p>
+                  <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20ayuda%20con%20los%20tr%C3%A1mites%20veterinarios%20para%20viajar%20con%20mi%20mascota"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                </div>
+                <div className="additional-info">
+                  <h3 className="title-additional-info">Viaje en cabina con certificado + Trámites Veterinarios</h3>
+                  <p>Solicita ayuda para realizar los tramites veterinarios y el certificado de animal de apoyo emocional o de perro de servicio para viajar con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlos.</p>
+                  <div className="button-container">
+                              <a
+                                href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20ayuda%20con%20los%20tr%C3%A1mites%20veterinarios%20y%20para%20solicitar%20un%20certificado%20para%20viajar%20con%20mi%20mascota%C2%A0en%C2%A0cabina"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-button"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
+                </div>
+                <p className="aviso-tarifas">Las tarifas, condiciones y restricciones de las aerolíneas pueden cambiar, por lo cual recomendamos verificar la información con la aerolínea antes de tu viaje</p>
+              <div className="row contenedor-padre-flex">
+                <div className="col-md-6 d-flex justify-content-start">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handlePreviousStep}
+                  >
+                    Atrás
+                  </button>
+                </div>
+              </div>
+              </>
+            ) : (
+              <Error onHandlePreviousStep={handlePreviousStep}/>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default Formulario;
-
-
-
-
-
-

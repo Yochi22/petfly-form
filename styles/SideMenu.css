@@ -8,15 +8,20 @@
     padding: 20px;
 }
 
+.side-menu h2 {
+    color: #0D3073;
+    text-align: left;
+}
+
 .logo-container {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .logo {
-    /* width: 6.25rem; */
+    
     width: 60%;
-    /* La imagen ocupará el 100% del ancho del contenedor */
+    
     height: auto
 }
 
@@ -31,12 +36,13 @@ h2 {
 }
 
 .progress-point {
-    background-color: #ccc;
+    background-color: #007bff1c;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
+    text-align: left;
+    font-weight:bolder;
+    color: #0D3073;
 }
 
 .progress-point.active {
