@@ -276,6 +276,16 @@ function Formulario() {
     }
   };
 
+  function formatPrice(price, currency) {
+    if (currency === "COP") {
+      const parts = price.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return parts.join(".");
+    } else {
+      return price; 
+    }
+  }
+
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -373,13 +383,13 @@ function Formulario() {
                         <div key={index} className="viaje-cabina-item">
                           <h4>{result.name.toUpperCase()}</h4>
                           <p>
-                            Costo:{" "}
-                            {result.price === 0
-                              ? "GRATIS"
-                              : result.price === null
-                              ? "El precio varía según distintas condiciones"
-                              : `${result.price} ${result.currency}`}
-                          </p>
+  Costo:{" "}
+  {result.price === 0
+    ? "GRATIS"
+    : result.price === null
+    ? "El precio varía según distintas condiciones"
+    : `${formatPrice(result.price, result.currency)} ${result.currency}`}
+</p>
                           {result.name.toUpperCase() ===
                             "VIAJE EN CABINA SIN CERTIFICADO" && (
                             <p>
@@ -443,13 +453,13 @@ function Formulario() {
                         <div key={index} className="viaje-bodega-item">
                           <h4>{result.name.toUpperCase()}</h4>
                           <p>
-                            Costo:{" "}
-                            {result.price === 0
-                              ? "GRATIS"
-                              : result.price === null
-                              ? "El precio varía según distintas condiciones"
-                              : `${result.price} ${result.currency}`}
-                          </p>
+  Costo:{" "}
+  {result.price === 0
+    ? "GRATIS"
+    : result.price === null
+    ? "El precio varía según distintas condiciones"
+    : `${formatPrice(result.price, result.currency)} ${result.currency}`}
+</p>
                           {result.name.toUpperCase() === "VIAJE EN BODEGA SIN CERTIFICADO" && (
                             <p>
                               Al cancelar el fee de la aerolínea, tu mascota
