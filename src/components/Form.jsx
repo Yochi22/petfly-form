@@ -264,6 +264,18 @@ function Formulario() {
   };
 
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  
+  const renderDescription = () => {
+    if (apiData[0] && apiData[0].description) {
+      const descriptionLines = apiData[0].description.split("\n");
+      return descriptionLines.map((line, index) => (
+        <p key={index}>{line}</p>
+      ));
+    } else {
+      return <p>No hay descripción disponible.</p>;
+    }
+  };
+
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -369,7 +381,7 @@ function Formulario() {
                               : `${result.price} ${result.currency}`}
                           </p>
                           {result.name.toUpperCase() ===
-                            "CABINA SIN CERTIFICADO" && (
+                            "VIAJE EN CABINA SIN CERTIFICADO" && (
                             <p>
                               Al cancelar el fee de la aerolínea, tu mascota
                               puede viajar en cabina contigo.
@@ -380,19 +392,19 @@ function Formulario() {
                             <p>Consideraciones extras: {result.extras}</p>
                           )}
                           {result.name.toUpperCase() ===
-                            "CABINA CON CERTIFICADO" && (
+                            "VIAJE EN CABINA CON CERTIFICADO DE ANIMAL DE APOYO EMOCIONAL" && (
                             <p>
                               Solicita tu certificado de animal de apoyo emocional y viaja con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
                             </p>
                           )}
                           {result.name.toUpperCase() ===
-                            "CABINA CON PERRO DE SERVICIO" && (
+                            "VIAJE EN CABINA CON CERTIFICADO DE PERRO DE SERVICIO" && (
                             <p>
                               Solicita tu certificado de perro de servicio y viaja con tu mascota en cabina sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
                             </p>
                           )}
                           {result.name.toUpperCase() ===
-                            "CABINA CON CERTIFICADO" && (
+                            "VIAJE EN CABINA CON CERTIFICADO DE ANIMAL DE APOYO EMOCIONAL" && (
                             <div className="button-container">
                               <a
                                 href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20cabina."
@@ -406,7 +418,7 @@ function Formulario() {
                           )}
 
                           {result.name.toUpperCase() ===
-                            "CABINA CON PERRO DE SERVICIO" && (
+                            "VIAJE EN CABINA CON CERTIFICADO DE PERRO DE SERVICIO" && (
                             <div className="button-container">
                               <a
                                 href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20cabina."
@@ -438,7 +450,7 @@ function Formulario() {
                               ? "El precio varía según distintas condiciones"
                               : `${result.price} ${result.currency}`}
                           </p>
-                          {result.name.toUpperCase() === "BODEGA" && (
+                          {result.name.toUpperCase() === "VIAJE EN BODEGA SIN CERTIFICADO" && (
                             <p>
                               Al cancelar el fee de la aerolínea, tu mascota
                               puede viajar en bodega.
@@ -448,13 +460,13 @@ function Formulario() {
                             <p>Consideraciones extras: {result.extras}</p>
                           )}
                           {result.name.toUpperCase() ===
-                            "BODEGA CON CERTIFICADO" && (
+                            "VIAJE EN BODEGA CON CERTIFICADO DE ANIMAL DE APOYO EMOCIONAL" && (
                             <p>
                               Solicita tu certificado de animal de apoyo emocional y lleva tu mascota en bodega sin costo adicional. Haz clic en el boton de whatsapp para solicitarlo
                             </p>
                           )}
                           {result.name.toUpperCase() ===
-                            "BODEGA CON CERTIFICADO" && (
+                            "VIAJE EN BODEGA CON CERTIFICADO DE ANIMAL DE APOYO EMOCIONAL" && (
                             <div className="button-container">
                               <a
                                 href="https://api.whatsapp.com/send?phone=573183207294&text=Hola,%20quiero%20solicitar%20un%20certificado%20de%20animal%20de%20apoyo%20emocional%20para%20viajar%20con%20mi%20mascota%20en%20bodega."
@@ -475,7 +487,8 @@ function Formulario() {
                 <h3 className="title-section-veterinarios">Estos son los <b>trámites veterinarios</b> para viajar con tu mascota</h3>
                 <div className="additional-info">
                   <h3 className="title-additional-info">Trámites veterinarios</h3>
-                  <p>{apiData[0].description}</p>
+  
+                  <p>{renderDescription()}</p> 
                   <p>
                     Precio aproximado de los trámites: {apiData[0].comments}
                   </p>
