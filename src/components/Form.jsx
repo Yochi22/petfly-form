@@ -48,11 +48,11 @@ function Formulario() {
     let cleanedValue = value;
 
     if (name === "phone") {
-      // Eliminar espacios en blanco
+      
       cleanedValue = value.replace(/\s+/g, "");
-      // Verificar si el número de teléfono no comienza con "57" ni con '+'
+      
       if (!cleanedValue.startsWith("57") && !cleanedValue.startsWith("+")) {
-        // Si no comienza con "57" ni '+', agregamos '57' al principio
+        
         cleanedValue = `57${cleanedValue}`;
       }
     }
@@ -265,17 +265,17 @@ function Formulario() {
 
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   
-  const renderDescription = () => {
-    if (apiData[0] && apiData[0].description) {
-      const descriptionLines = apiData[0].description.split("\n");
-      return descriptionLines.map((line, index) => (
-        <p key={index}>{line}</p>
-      ));
-    } else {
-      return <p>No hay descripción disponible.</p>;
-    }
-  };
-
+ const renderDescription = () => {
+  if (apiData[0] && apiData[0].description) {
+    // Dividir el texto en párrafos en cada instancia de \n
+    const descriptionLines = apiData[0].description.split("\\n");
+    return descriptionLines.map((line, index) => (
+      <p key={index}>{line}</p>
+    ));
+  } else {
+    return <p>No hay descripción disponible.</p>;
+  }
+};
   function formatPrice(price, currency) {
     if (currency === "COP") {
       const parts = price.toString().split(".");
